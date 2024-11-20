@@ -157,7 +157,9 @@ class Game:
         elif self.door_choice == "3":
             print("place holder")
 
-
+    def continue_game(self):
+        print("You continue working...")
+        self.log.log("Player continued working")
 
 
 # runs the game from the Game function
