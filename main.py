@@ -67,6 +67,7 @@ class Game:
         # the game loop will start running by default as it is set to True.
         self.running = True
         self.start = False
+        self.log = Loggable()
 
     def run(self):
         """The run method starts the game loop and provides an introduction to
@@ -116,6 +117,7 @@ class Game:
                 self.log.log("Player quits the game")
                 self.running = False
             elif player_input.lower() == "s":
+                self.game_started = True
                 self.start_game()
                 self.log.log("Player starts the game")
             elif player_input.lower() == "r":
@@ -160,7 +162,6 @@ class Game:
     def continue_game(self):
         print("You continue working...")
         self.log.log("Player continued working")
-
 
 # runs the game from the Game function
 if __name__ == "__main__":
