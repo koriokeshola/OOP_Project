@@ -104,30 +104,6 @@ class Game:
               "\n|                                         |"
               "\n|       !! TRY NOT TO GET FIRED !!        |"
               "\n*******************************************\n")
-        
-    def update(self):
-        """The update method waits for player input and responds to their
-        choice to start the game or quit."""
-        if self.start == False:
-            player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
-            if player_input.lower() == "q":
-                # we exit the game running loop by setting this flag variable
-                # to False
-                self.running = False
-            elif player_input.lower() == "s":
-                self.start_game()
-            elif player_input.lower() == "r":
-                self.rules()
-        else:
-            """The update method waits for player input and responds to their
-            choice to continue the game or quit."""
-            player_input = input("Press 'c' to continue or 'q' to quit: ")
-            if player_input.lower() == "q":
-                # we exit the game running loop by setting this flag variable
-                # to False
-                self.running = False
-            elif player_input.lower() == "c": # allows the user to choose to continue the game
-                return
             
     def update(self):
         """The update method waits for player input and responds to their
