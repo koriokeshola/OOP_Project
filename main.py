@@ -24,6 +24,23 @@
 # 5. Modify Menu Options Dynamically:
 #    - Understand how to change menu options based on the game's state.
 #    - Learn to dynamically adjust user choices to match the game's progression.
+class Recipes:
+    def __init__(self, size, milk, sugar, temp, ice):
+        self.size = size # s, m or l
+        self.milk = milk # yes or no
+        self.sugar = sugar # 1, 2, or 3 spoons
+        self.temp = temp # hot, cold
+        self.ice = ice # yes, no, or extra
+        
+    def coffee_options(self):
+        print()
+        
+    def tea_options(self):
+        print()
+        
+    def boba_options(self):
+        print()
+        
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
