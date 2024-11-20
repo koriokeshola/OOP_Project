@@ -24,6 +24,22 @@
 # 5. Modify Menu Options Dynamically:
 #    - Understand how to change menu options based on the game's state.
 #    - Learn to dynamically adjust user choices to match the game's progression.
+
+from abc import ABC, abstractmethod
+
+class Loggable:
+    def __init__(self):
+        # Private variable to hold logs
+        self._logs = []
+
+    @property
+    def logs(self):
+        return self._logs  # Getter to access logs
+
+    def log(self, message: str):
+        # Method to log a message
+        self._logs.append(message)
+
 class Recipes:
     def __init__(self, size, milk, sugar, temp, ice):
         self.size = size # s, m or l
@@ -88,7 +104,7 @@ class Game:
               "\n|                                         |"
               "\n|       !! TRY NOT TO GET FIRED !!        |"
               "\n*******************************************\n")
-
+        
     def update(self):
         """The update method waits for player input and responds to their
         choice to start the game or quit."""
@@ -112,80 +128,58 @@ class Game:
                 self.running = False
             elif player_input.lower() == "c": # allows the user to choose to continue the game
                 return
+            
+    def update(self):
+        """The update method waits for player input and responds to their
+        choice to start the game or quit."""
+        if self.start == False:
+            player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
+            if player_input.lower() == "q":
+                # we exit the game running loop by setting this flag variable
+                # to False
+                self.log.log("Player quits the game")
+                self.running = False
+            elif player_input.lower() == "s":
+                self.start_game()
+                self.log.log("Player starts the game")
+            elif player_input.lower() == "r":
+                self.rules()
+                self.log.log("Player checks the rules")
+        else: #if user chooses to continue they get more options
+            player_input = input("Press 'q' to quit, 'c' to continue, "
+                                 "'i' to interact,"
+                                 "'m' to make drink")
+            if player_input.lower() == "q": #quits game
+                self.running = False
+                self.log.log("Player quits the game")  
+            elif player_input.lower() == "c": #continues game
+                self.log.log("Player continued working")  
+                self.continue_game()
+            elif player_input.lower() == "i": #interacts with customer
+                self.log.log("Player talks to the customer")
+                self.interact_with_customers()
+            elif player_input.lower() == "m": #chooses a door
+                self.log.log("Player chooses to make a drink")
+                self.make_drink()
 
     def start_game(self):
         """The start_game method introduces the player to the mystery case and
         sets the scene."""
 
-        print("\nYou find yourself in the opulent drawing room of a grand "
-              "mansion. \nThe walls are huge and the floor is so clear you could see \n"
-              "your face in it. \"This place looks quite expensive\" you tell yourself briefly."
-              " \nAs the famous detective, you're here to solve the "
-              "mysterious case of...\n'The Missing Diamond Necklace!'.\n"
-              "Put your great detective skills to the test and unveil the truth about \n"
-              "what has happened to this necklace!")
+        print("\nGame intro")
 
-        # allows the user to input whichever door they wish to go through
-        door_choice = int(input("Please choose Door One or Door Two [1 or 2]: "))
-
-        # displays the result of going through door one
-        if door_choice == 1:
-            print("\nYou walk into Door One and you look around a bit. \n"
-                  "You stumble on a jewelry box hidden under the table!")
-            # sets the start variable to true so the update function will run correctly
-            self.start = True
-
-            # gives the user a chance to continue or leave the game
-            self.update()
-
-            # displays the continued monologue
-            print("\nYou pick up the jewelry box and open it. \nYou find loads of "
-                  "different expensive necklaces and earrings \nbut not the one you're looking for."
-                  "\nYou decide to keep the box with you and continue heading forward."
-                  "\nYou stumble on two more doors.!")
-
-            # allows the user to input whichever door they wish to go through
-            door_choice = int(input("Head through Door One or Door Two [1 or 2]: "))
-
-            # depending on whichever door the user has chosen, a different result is displayed
-            if door_choice == 1:
-                print("\nYou walk into Door One and find an empty room :(\n"
-                      "You decide to walk back to the drawing room to search.")
-            elif door_choice == 2:
-                print("\nYou walk into Door Two and have found a pearl "
-                      "from a piece of jewelry!")
-            # sets the start variable to true so the update function will run correctly
-            self.update()
-
-        # displays the result of going through door two
-        elif door_choice == 2:
-            print("\nYou walk into Door Two and notice you have found a \n"
-                  "metal detector!")
-
-            # sets the start variable to true so the update function will run correctly
-            self.start = True
-
-            # sets the start variable to true so the update function will run correctly
-            self.update()
-
-            print("\nYou pick up the metal detector and keep it with you as it could be useful to "
-                  "\nfind the necklace. You continue to head forward."
-                  "\nYou stumble on two more doors.!")
-
-            # allows the user to input whichever door they wish to go through
-            door_choice = int(input("Head through Door One or Door Two [1 or 2]: "))
-
-            # depending on whichever door the user has chosen, a different result is displayed
-            if door_choice == 1:
-                print("\nYou walk into Door One and find a room covered top to bottom in cloths\n"
-                      "You decide to use the metal detector you acquired to help hear if "
-                      "\nthere is anything under the cloths.")
-            elif door_choice == 2:
-                print("\nYou walk into Door Two and have found the room where all the drawing"
-                      " materials are kept!")
-
-            # sets the start variable to true so the update function will run correctly
-            self.update()
+    def make_drink(self): #method for choosing a door
+        self.drink = input("What drinm do you want to make. \n"
+                                 "1. Coffee\n"
+                                 "2. Tea\n"
+                                 "3. Boba\n"
+                                 "Enter the number of the drink you want to make: ")
+        if self.drink == "1":
+            print("placeholder")
+        elif self.drink == "2":
+            print("placeholder")
+        elif self.door_choice == "3":
+            print("place holder")
 
 
 
@@ -194,3 +188,7 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     game.run()
+
+    print("\nGame Logs:")
+    for log in game.log.logs:
+        print(log)
