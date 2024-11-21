@@ -1,30 +1,20 @@
 # CMPU 2016 Object-Oriented Programming
 # TU857-2
-# 26/09/24, Semester 1: Python with Blessing Ugochukwu, C23342083
-#26/09/24, Semester 1: Python with Bouthayna Metarfi, C23306091
+# Semester 1 - Python with:
+# Blessing Ugochukwu, C23342083
+# Bouthayna Metarfi, C23306091
+# Kori Okeshola, C23401212
+# Seema Alazhari, C23405732
+# Renee Low, C23321923
+# Bartosz Sobiegraj, C23398751
 
-# Mystery Adventure Game - Week 1 Lab Template
-# Introduction to Mystery Adventure Game Development
-# Setting up the initial game environment and introduction scene
-#
-# Learning objectives lab week 1:
-# 1. Understand Basic Python Programming:
-#    - Familiarize yourself with the structure of a Python script.
-#    - Identify the role of classes and methods in Python code.
-# 2. Handle User Input:
-#    - Learn to use the input() function to receive user input.
-#    - Practice capturing and processing user choices and responses.
-# 3. Apply If-Else Statements:
-#    - Understand the concept of conditional statements.
-#    - Learn to use if-else statements to control program flow based on
-#    conditions.
-# 4. Enhance User Experience:
-#    - Explore techniques to make user interactions more engaging and immersive.
-#    - Learn to incorporate descriptive text and narrative elements into your
-#    program.
-# 5. Modify Menu Options Dynamically:
-#    - Understand how to change menu options based on the game's state.
-#    - Learn to dynamically adjust user choices to match the game's progression.
+
+# Program Description: This game is named "Golden Café".
+# Users play as a barista to fulfill customer orders over a 5-day period.
+# The aim is to complete the game at 100%, however you can progress even if
+# you make some mistakes along the way.
+# This project implements O.O.P principles such as abstraction, inheritance,
+# polymorphism, encapsulation, file handling and modules.
 
 from abc import ABC, abstractmethod
 import random
@@ -42,6 +32,17 @@ class Loggable:
     def log(self, message: str):
         # Method to log a message
         self._logs.append(message)
+
+    def save_logs_to_file(self, filename):
+        try:
+            with open (filename, 'w') as log_file: # Open file in 'write' mode
+                for log in self._logs:
+                    log_file.write(log + '\n')  # Write each log on a
+                    # new line
+            print(f"Logs saved to {filename}")
+        except Exception as e: # display error message in case of log entries
+            # failing to save
+            print(f"Log saving error occurred: {e}")
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
@@ -72,16 +73,19 @@ class Game:
         }
 
         self.log = Loggable()
+        self.error_log = Loggable()
+        self.log.log("Game initialised.")
 
     def run(self):
         """The run method starts the game loop and provides an introduction to
         the game."""
+        self.log.log("Game is running.")
 
-        print("You're stumbling around in the cold, cant feel your face... "
-              "\nA strange figure approaches. you cant see in the harsh conditions"
-              "\nHe extends out his hand.. you reach out"
-              "\nHe offers you a chance to redeem yourself, a nice job in a cozy cafe"
-              "\nYou accept.. reluctantly"
+        print("You're stumbling around in the cold, you can't feel your face... "
+              "\nA strange figure approaches. You can't see in the harsh conditions."
+              "\nHe extends out his hand.. you reach out to take it."
+              "\nHe offers you a chance to redeem yourself, a nice job in a cosy cafe!"
+              "\nYou accept... reluctantly."
               "\nNow your journey begins...")
         print("\tG O L D E N   C A F É"
               "\n*******************************************"
@@ -112,11 +116,15 @@ class Game:
     def update(self):
         """The update method waits for player input and responds to their
         choice to start the game or quit."""
-        if self.start == False:
+        if not self.start:
             player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
             if player_input.lower() == "q":
                 # we exit the game running loop by setting this flag variable
                 # to False
+                self.__running = False
+                filename = input(
+                    "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                self.log.save_logs_to_file(filename)
                 self.log.log("Player quits the game")
                 self.running = False
             elif player_input.lower() == "s":
@@ -130,8 +138,12 @@ class Game:
         else:  # if user chooses to continue they get more options
             player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, or 'c' to continue: ")
             if player_input.lower() == "q":  # quits game
-                self.running = False
+                self.__running = False
+                filename = input(
+                    "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                self.log.save_logs_to_file(filename)
                 self.log.log("Player quits the game")
+                self.running = False
             elif player_input.lower() == "c":  # continues game
                 self.log.log("Player continued working")
                 self.continue_game()
@@ -233,6 +245,7 @@ class Game:
     def start_game(self):
         """The start_game method introduces the player to the mystery case and
         sets the scene."""
+        self.log.log("Game has begun.")
         print("\nGame intro")
         day = 1
         customers = 1
@@ -280,4 +293,8 @@ if __name__ == "__main__":
 
     print("\nGame Logs:")
     for log in game.log.logs:
+        print(log)
+
+    print("\nGame Error Logs:")
+    for log in game.error_log.logs:
         print(log)
