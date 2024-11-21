@@ -28,8 +28,6 @@
 from abc import ABC, abstractmethod
 import random
 from random import randint
-from turtledemo.chaos import jumpto
-
 
 class Loggable:
     def __init__(self):
@@ -43,11 +41,6 @@ class Loggable:
     def log(self, message: str):
         # Method to log a message
         self._logs.append(message)
-
-
-class Characters():
-    def __init__(self, name):
-        self.name = name
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
@@ -241,9 +234,6 @@ class Game:
                     customers = customers + 1
             customers = 1
             day = day + 1
-
-
-
 
 
     def continue_game(self):
