@@ -2,6 +2,7 @@
 # TU857-2
 # 26/09/24, Semester 1: Python with Blessing Ugochukwu, C23342083
 #26/09/24, Semester 1: Python with Bouthayna Metarfi, C23306091
+
 # Mystery Adventure Game - Week 1 Lab Template
 # Introduction to Mystery Adventure Game Development
 # Setting up the initial game environment and introduction scene
