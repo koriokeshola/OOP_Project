@@ -26,6 +26,10 @@
 #    - Learn to dynamically adjust user choices to match the game's progression.
 
 from abc import ABC, abstractmethod
+import random
+from random import randint
+from turtledemo.chaos import jumpto
+
 
 class Loggable:
     def __init__(self):
@@ -40,23 +44,10 @@ class Loggable:
         # Method to log a message
         self._logs.append(message)
 
-class Recipes:
-    def __init__(self, size, milk, sugar, temp, ice):
-        self.size = size # s, m or l
-        self.milk = milk # yes or no
-        self.sugar = sugar # 1, 2, or 3 spoons
-        self.temp = temp # hot, cold
-        self.ice = ice # yes, no, or extra
-        
-    def coffee_options(self):
-        print()
-        
-    def tea_options(self):
-        print()
-        
-    def boba_options(self):
-        print()
-        
+
+class Characters():
+    def __init__(self, name):
+        self.name = name
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
@@ -67,6 +58,24 @@ class Game:
         # the game loop will start running by default as it is set to True.
         self.running = True
         self.start = False
+        self.drink = None
+        self.drink_name = None
+        self.option = []
+        self.made_drink = []
+        self.size = None # s, m or l
+        self.milk = None # yes or no
+        self.sugar = None # 1, 2, or 3 spoons
+        self.temp = None # hot, cold
+        self.ice = None # yes, no, or extra
+        self.name = ["Katie", "Hugo", "Michael", "Billy", "Lilly", "Lisa", "Poppy", "Lila", "Katelyn"]
+        self.day_drink = {
+            1: "Serving Coffee Only Today", # coffee only
+            2: "Serving Tea Only Today", # tea only
+            3: "Serving Coffee and Tea Today", # coffee and tea
+            4: "Serving Boba Only Today", # boba only
+            5: "Serving Coffee, Tea, and Boba Today" # all three
+        }
+
         self.log = Loggable()
 
     def run(self):
@@ -85,8 +94,7 @@ class Game:
               "\n|     Serving Coffee, Tea, and Boba!      |"
               "\n|                                         |"
               "\n*******************************************\n")
-        print("Now that you have started your job, you will have to satisfy customers everyday")
-
+        print("Now that you have started your job, you will have to satisfy customers everyday!")
 
         while self.running:
             self.update()
@@ -105,7 +113,7 @@ class Game:
               "\n|                                         |"
               "\n|       !! TRY NOT TO GET FIRED !!        |"
               "\n*******************************************\n")
-            
+
     def update(self):
         """The update method waits for player input and responds to their
         choice to start the game or quit."""
@@ -118,50 +126,130 @@ class Game:
                 self.running = False
             elif player_input.lower() == "s":
                 self.game_started = True
+                self.start = True
                 self.start_game()
                 self.log.log("Player starts the game")
             elif player_input.lower() == "r":
                 self.rules()
                 self.log.log("Player checks the rules")
-        else: #if user chooses to continue they get more options
-            player_input = input("Press 'q' to quit, 'c' to continue, "
-                                 "'i' to interact,"
-                                 "'m' to make drink")
-            if player_input.lower() == "q": #quits game
+        else:  # if user chooses to continue they get more options
+            player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, or 'c' to continue: ")
+            if player_input.lower() == "q":  # quits game
                 self.running = False
-                self.log.log("Player quits the game")  
-            elif player_input.lower() == "c": #continues game
-                self.log.log("Player continued working")  
+                self.log.log("Player quits the game")
+            elif player_input.lower() == "c":  # continues game
+                self.log.log("Player continued working")
                 self.continue_game()
-            elif player_input.lower() == "i": #interacts with customer
+            elif player_input.lower() == "i":  # interacts with customer
                 self.log.log("Player talks to the customer")
-                self.interact_with_customers()
-            elif player_input.lower() == "m": #chooses a door
+                self.continue_game()
+            elif player_input.lower() == "m":  # chooses a door
                 self.log.log("Player chooses to make a drink")
                 self.make_drink()
+
+    def coffee_option(self, name):
+        #choice = randint(1, 5)
+
+        #if choice == 1:
+            print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
+            self.option = ["c", "m", "no", "3", "hot", "no"]
+
+
+    def drink_options(self, name, day):
+        drink_per_day = {
+            1: "c", # coffee only
+            2: "t", # tea only
+            3: random.choice(["c", "t"]), # coffee and tea
+            4: "b", # boba only
+            5: random.choice(["c", "t", "b"]) # all three
+        }
+
+        # finds out the day number
+        day_chosen = drink_per_day[day]
+
+        if day_chosen == "c":
+            self.coffee_option(name)
+        # elif day_chosen == "t":
+        #     self.tea_option(name)
+        # elif day_chosen == "b":
+        #     self.boba_option(name)
+
+
+
+
+    # allows the user to choose the drink
+    def drink_choice(self):
+        self.drink = input("What drink do you want to make. \n"
+                           "'c' for coffee\n"
+                           "'t' for tea\n"
+                           "'b' for boba\n"
+                           "Enter the drink you want to make: ")
+
+        self.made_drink.append(self.drink)
+
+        if self.drink == "c":
+            self.drink_name = "coffee"
+        elif self.drink == "t":
+            self.drink_name = "tea"
+        elif self.drink == "b":
+            self.drink_name = "boba"
+
+        return self.drink
+
+    def make_drink(self, name):
+        self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
+        self.milk = input(f"Did {name} want milk? yes or no?: ")  # yes or no
+        self.sugar = input(f"Did {name} want 1, 2 or 3 spoons of sugar? [1, 2, 3]: ")  # 1, 2, or 3 spoons
+        self.temp = input(f"Did {name} want their {self.drink_name} hot or cold?: ")  # hot, cold
+        self.ice = input(f"Did {name} want ice? yes, no, or extra?: ")  # yes, no, or extra
+
+        self.made_drink.append(self.size)
+        self.made_drink.append(self.milk)
+        self.made_drink.append(self.sugar)
+        self.made_drink.append(self.temp)
+        self.made_drink.append(self.ice)
+
+        return self.made_drink
+
 
     def start_game(self):
         """The start_game method introduces the player to the mystery case and
         sets the scene."""
-
         print("\nGame intro")
+        day = 1
+        customers = 1
 
-    def make_drink(self): #method for choosing a door
-        self.drink = input("What drinm do you want to make. \n"
-                                 "1. Coffee\n"
-                                 "2. Tea\n"
-                                 "3. Boba\n"
-                                 "Enter the number of the drink you want to make: ")
-        if self.drink == "1":
-            print("placeholder")
-        elif self.drink == "2":
-            print("placeholder")
-        elif self.door_choice == "3":
-            print("place holder")
+        while day <= 5:
+            print(f"\nDay {day}")
+            ch_drk = self.day_drink[day]
+            print(f"{ch_drk}\n")
+            self.update()
+
+            while customers <= 3:
+                name = random.choice(self.name)
+
+                self.drink_options(name, day)
+
+                self.drink_choice()
+
+                self.make_drink(name)
+
+                if self.made_drink == self.option:
+                    print(f"\nHurray, {name} is impressed")
+                else:
+                    print(f"\n{name} is disappointed")
+                    customers = customers + 1
+            customers = 1
+            day = day + 1
+
+
+
+
 
     def continue_game(self):
-        print("You continue working...")
+        print("You continue working...\n")
         self.log.log("Player continued working")
+
 
 # runs the game from the Game function
 if __name__ == "__main__":
