@@ -60,7 +60,8 @@ class Game:
         self.sugar = None # 1, 2, or 3 spoons
         self.temp = None # hot, cold
         self.ice = None # yes, no, or extra
-        self.name = ["Katie", "Hugo", "Michael", "Billy", "Lilly", "Lisa", "Poppy", "Lila", "Katelyn"]
+        self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
+                     "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama"]
         self.day_drink = {
             1: "Serving Coffee Only Today", # coffee only
             2: "Serving Tea Only Today", # tea only
@@ -81,7 +82,7 @@ class Game:
               "\nHe offers you a chance to redeem yourself, a nice job in a cozy cafe"
               "\nYou accept.. reluctantly"
               "\nNow your journey begins...")
-        print("\t\t\tG O L D E N   C A F É"
+        print("\tG O L D E N   C A F É"
               "\n*******************************************"
               "\n|                                         |"
               "\n|     Serving Coffee, Tea, and Boba!      |"
@@ -257,6 +258,7 @@ class Game:
                     print(f"\n{name} is disappointed")
                     customers = customers + 1
                     self.drink = None
+                self.made_drink = []  #bouthaynas line
                 self.update()
             customers = 1
             day = day + 1
