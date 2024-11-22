@@ -11,6 +11,8 @@ class Character(ABC):  # Make Character an abstract class
     def __init__(self):
         # Even in abstract classes we see encapsulation  as before.
         self.option = []
+        self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
+                     "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama"]
 
     def coffee_option(self, name):
         #choice = randint(1, 5)
