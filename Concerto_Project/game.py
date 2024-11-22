@@ -1,6 +1,7 @@
 from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
+from achievements import Achievement #imports achievement class
 import random
 from time import sleep
 
@@ -27,6 +28,7 @@ class Game:
         }
         self.log = Loggable()
         self.error_log = Loggable()
+        self.achievement = Achievement() 
         self.log.log("Game initialised.")
 
     def run(self):
@@ -170,4 +172,8 @@ class Game:
 
     def continue_game(self):
         print("You continue working...")
+
+        #testing achievements
+        self.achievement.unlock("You're a hard worker!")
+        
         self.log.log("Player continued working")
