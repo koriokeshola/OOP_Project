@@ -17,6 +17,10 @@ class MakeDrink:
         self.error_log = Loggable()
 
     def drink_options(self, name, day):
+        if not name:
+            print("name not set")
+            return
+
         drink_per_day = {
             1: "c", # coffee only
             2: "t", # tea only
@@ -34,8 +38,6 @@ class MakeDrink:
         #     self.character.tea_option(name)
         # elif day_chosen == "b":
         #     self.character.boba_option(name)
-
-
 
 
     # allows the user to choose the drink
