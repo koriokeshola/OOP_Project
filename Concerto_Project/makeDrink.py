@@ -1,6 +1,7 @@
 from loggable import Loggable
 from characters import Character
 import random
+from time import sleep
 
 class MakeDrink:
     def __init__(self):
@@ -17,9 +18,9 @@ class MakeDrink:
         self.error_log = Loggable()
 
     def drink_options(self, name, day):
-        if not name:
-            print("name not set")
-            return
+        # if not name:
+        #     print("name not set")
+        #     return
 
         drink_per_day = {
             1: "c", # coffee only
@@ -65,26 +66,31 @@ class MakeDrink:
 
     def make_drink(self, name):
         self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
+        sleep(.5)
         while self.size not in ["s", "m", "l"]:
             print("Please pick s, m, or l\n")
             self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
 
         self.milk = input(f"Did {name} want milk? yes or no?: [y, n]: ")  # yes or no
+        sleep(.5)
         while self.milk not in ["y", "n"]:
             print("Please pick y or n\n")
             self.milk = input(f"Did {name} want milk? yes or no?: [y, n]: ")  # yes or no
 
         self.sugar = input(f"Did {name} want 0, 1 or 3 spoons of sugar? [0, 1, 3]: ")  # 0, 1, or 3 spoons
+        sleep(.5)
         while self.sugar not in ["0", "1", "3"]:
             print("Please pick 0, 1, or 3\n")
             self.sugar = input(f"Did {name} want 0, 1 or 3 spoons of sugar? [0, 1, 3]: ")  # 0, 1, or 3 spoons
 
         self.temp = input(f"Did {name} want their {self.drink_name} hot or cold?: ")  # hot, cold
+        sleep(.5)
         while self.temp not in ["hot", "cold"]:
             print("Please pick hot or cold\n")
             self.temp = input(f"Did {name} want their {self.drink_name} hot or cold?: ")  # hot, cold
 
         self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
+        sleep(.5)
         while self.ice not in ["y", "n", "x"]:
             print("Please pick y, n, or x\n")
             self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
