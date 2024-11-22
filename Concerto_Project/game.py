@@ -1,12 +1,14 @@
 from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
-from achievements import Achievements #imports achievement class
+from achievements import Achievements  # imports achievement class
 import random
 from time import sleep
 
+
 class Game:
     """The Game class is set up to manage the game's behavior."""
+
     def __init__(self):
         # self.running is an instance variable within the Game class
         # This means that when an instance of the Game class is created,
@@ -20,14 +22,15 @@ class Game:
         self.name = None
         self.interact = False
         self.day_drink = {
-            1: "Serving Coffee Only Today", # coffee only
-            2: "Serving Tea Only Today", # tea only
-            3: "Serving Coffee and Tea Today", # coffee and tea
-            4: "Serving Boba Only Today", # boba only
-            5: "Serving Coffee, Tea, and Boba Today" # all three
+            1: "Serving Coffee Only Today",  # coffee only
+            2: "Serving Tea Only Today",  # tea only
+            3: "Serving Coffee and Tea Today",  # coffee and tea
+            4: "Serving Boba Only Today",  # boba only
+            5: "Serving Coffee, Tea, and Boba Today"  # all three
         }
         self.log = Loggable()
         self.error_log = Loggable()
+        self.achievement = Achievements()
         self.log.log("Game initialised.")
 
     def run(self):
@@ -118,7 +121,7 @@ class Game:
                     else:
                         print(f"You already interacted with the {self.name}, please make their drink.\n")
                         self.update()
-                elif player_input.lower() == "m":  # make a drink
+                elif player_input.lower() == "m":  # chooses a door
                     if self.interact is True:
                         self.log.log("Player chooses to make a drink")
                         self.make_drink()
@@ -151,6 +154,7 @@ class Game:
             print(f"{ch_drk}\n")
 
             while self.customers <= 3:
+                print("hello")
                 self.name = random.choice(self.character.name)
                 self.update()
 
@@ -159,18 +163,35 @@ class Game:
                     self.log.log("Player impressed the customer")
                 else:
                     print(f"\n{self.name} is disappointed")
+
+                    self.achievement.unlock("You've disappointed your first customer...")
                     self.log.log("Player disappoints the customer")
 
                 self.customers = self.customers + 1
                 self.make.drink = None
-                self.make.made_drink = []  #bouthaynas line
+                self.make.made_drink = []  # bouthaynas line
                 self.interact = False
+
+
                 self.update()
             self.customers = 1
+            if self.day == 1:
+                self.achievement.unlock("You survived your first day on the job!")
+            elif self.day == 2:
+                self.achievement.unlock("You completed day 2!")
+            elif self.day == 3:
+                self.achievement.unlock("You completed day 3!")
+            elif self.day == 4:
+                self.achievement.unlock("You completed day 4!")
+            else:
+                self.achievement.unlock("You completed day 5!")
             self.day = self.day + 1
 
+
     def continue_game(self):
-        #testing achievements
+        print("You continue working...")
+
+        # testing achievements
         self.achievement.unlock("You're a hard worker!")
-        
+
         self.log.log("Player continued working")
