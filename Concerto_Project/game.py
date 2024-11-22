@@ -148,31 +148,36 @@ class Game:
         barista = input("What is your name: ")
         print(f"Hello {barista}, time to get working...\n")
 
-        while self.day <= 5:
-            print(f"\nDay {self.day}")
-            ch_drk = self.day_drink[self.day]
-            print(f"{ch_drk}\n")
+        while self.day <= 5 & self.__running is True:
+            if self.__running is True:
+                print(f"\nDay {self.day}")
+                ch_drk = self.day_drink[self.day]
+                print(f"{ch_drk}\n")
+            else:
+                quit(self.start_game())
 
-            while self.customers <= 3:
-                self.name = random.choice(self.character.name)
-                self.update()
+            while self.customers <= 3 & self.__running is True:
+                if self.__running is True:
+                    print("hello")
+                    self.name = random.choice(self.character.name)
+                    self.update()
 
-                if self.make.made_drink == self.make.character.option:
-                    print(f"\nHurray, {self.name} is impressed")
-                    self.log.log("Player impressed the customer")
+                    if self.make.made_drink == self.make.character.option:
+                        print(f"\nHurray, {self.name} is impressed")
+                        self.log.log("Player impressed the customer")
+                    else:
+                        print(f"\n{self.name} is disappointed")
+
+                        self.achievement.unlock("You've disappointed your first customer...")
+                        self.log.log("Player disappoints the customer")
+
+                    self.customers = self.customers + 1
+                    self.make.drink = None
+                    self.make.made_drink = []  # bouthaynas line
+                    self.interact = False
+                    self.update()
                 else:
-                    print(f"\n{self.name} is disappointed")
-
-                    self.achievement.unlock("You've disappointed your first customer...")
-                    self.log.log("Player disappoints the customer")
-
-                self.customers = self.customers + 1
-                self.make.drink = None
-                self.make.made_drink = []  # bouthaynas line
-                self.interact = False
-
-
-                self.update()
+                    quit(self.start_game())
             self.customers = 1
             if self.day == 1:
                 self.achievement.unlock("You survived your first day on the job!")
