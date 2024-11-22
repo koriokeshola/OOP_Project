@@ -11,10 +11,12 @@ class Game:
         # the game loop will start running by default as it is set to True.
         self.__running = True
         self.start = False
+        self.day = 1
+        self.customers = 1
         self.make = MakeDrink()
         self.character = Character()
-        self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
-                     "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama"]
+        self.name = None
+        self.interact = False
         self.day_drink = {
             1: "Serving Coffee Only Today", # coffee only
             2: "Serving Tea Only Today", # tea only
@@ -100,11 +102,31 @@ class Game:
                     self.log.log("Player continued working")
                     self.continue_game()
                 elif player_input.lower() == "i":  # interacts with customer
-                    self.log.log("Player talks to the customer")
-                    self.continue_game()
+                    if self.interact is not True:
+                        self.log.log("Player talks to the customer")
+                        self.interact = True
+                        self.drink_op()
+                    else:
+                        print(f"You already interacted with the {self.name}, please make their drink.\n")
+                        self.update()
                 elif player_input.lower() == "m":  # chooses a door
-                    self.log.log("Player chooses to make a drink")
-                    self.make.make_drink()
+                    if self.interact is True:
+                        self.log.log("Player chooses to make a drink")
+                        self.make_drink()
+                    else:
+                        print("You need to interact with the customer first.\n")
+                        self.update()
+
+    def drink_op(self):
+        print(f"Customer {self.customers}")
+        self.make.drink_options(self.name, self.day)
+        self.update()
+
+    def make_drink(self):
+        self.make.drink_choice()
+
+        self.make.make_drink(self.name)
+        self.log.log("Player makes the drink")
 
     def start_game(self):
         """The start_game method introduces the player to the mystery case and
@@ -114,38 +136,30 @@ class Game:
         barista = input("What is your name: ")
         print(f"Hello {barista}, time to get working...\n")
 
-        day = 1
-        customers = 1
-
-        while day <= 5:
-            print(f"\nDay {day}")
-            ch_drk = self.day_drink[day]
+        while self.day <= 5:
+            print(f"\nDay {self.day}")
+            ch_drk = self.day_drink[self.day]
             print(f"{ch_drk}\n")
             self.update()
 
-            while customers <= 3:
-                name = random.choice(self.name)
-
-                print(f"Customer {customers}")
-                self.make.drink_options(name, day)
-
-                self.make.drink_choice()
-
-                self.make.make_drink(name)
-                self.log.log("Player makes the drink")
+            while self.customers <= 3:
+                self.name = random.choice(self.character.name)
+                self.update()
 
                 if self.make.made_drink == self.make.character.option:
-                    print(f"\nHurray, {name} is impressed")
+                    print(f"\nHurray, {self.name} is impressed")
                     self.log.log("Player impressed the customer")
                 else:
-                    print(f"\n{name} is disappointed")
+                    print(f"\n{self.name} is disappointed")
                     self.log.log("Player disappoints the customer")
-                    customers = customers + 1
-                    self.make.drink = None
+
+                self.customers = self.customers + 1
+                self.make.drink = None
                 self.make.made_drink = []  #bouthaynas line
+                self.interact = False
                 self.update()
-            customers = 1
-            day = day + 1
+            self.customers = 1
+            self.day = self.day + 1
 
     def continue_game(self):
         print("You continue working...\n")
