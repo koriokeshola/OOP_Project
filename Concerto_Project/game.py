@@ -28,14 +28,13 @@ class Game:
         }
         self.log = Loggable()
         self.error_log = Loggable()
-        self.achievement = Achievements() 
         self.log.log("Game initialised.")
 
     def run(self):
         """The run method starts the game loop and provides an introduction to
         the game."""
         self.log.log("Game is running.")
-        sleep_time = 1
+        sleep_time = 0
         print("You're stumbling around in the cold, you can't feel your face... ")
         sleep(sleep_time)
         print("A strange figure approaches. You can't see in the harsh conditions.")
@@ -119,7 +118,7 @@ class Game:
                     else:
                         print(f"You already interacted with the {self.name}, please make their drink.\n")
                         self.update()
-                elif player_input.lower() == "m":  # chooses a door
+                elif player_input.lower() == "m":  # make a drink
                     if self.interact is True:
                         self.log.log("Player chooses to make a drink")
                         self.make_drink()
@@ -171,8 +170,6 @@ class Game:
             self.day = self.day + 1
 
     def continue_game(self):
-        print("You continue working...")
-
         #testing achievements
         self.achievement.unlock("You're a hard worker!")
         
