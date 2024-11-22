@@ -159,7 +159,7 @@ class Game:
             else:
                 quit(self.start_game())
 
-            while self.customers <= 2 and self.__running:
+            while self.customers <= 3 and self.__running:
                 if self.__running:
                     self.name = random.choice(self.character.name)
                     self.update()
