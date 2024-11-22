@@ -1,5 +1,3 @@
-from turtledemo.penrose import start
-
 from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
@@ -94,6 +92,7 @@ class Game:
                         "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
                     self.log.save_logs_to_file(filename)
                     self.log.log("Player quits the game")
+                    self.__running = False
                 elif player_input.lower() == "s":
                     self.start = True
                     self.start_game()
@@ -148,37 +147,34 @@ class Game:
         print("\nGame intro")
         barista = input("What is your name: ")
         print(f"Hello {barista}, time to get working...\n")
-        total_stars = 0
 
         while self.day <= 5 and self.__running:
-            if self.__running:
+            if self.__running is True:
                 print(f"\nDay {self.day}")
                 ch_drk = self.day_drink[self.day]
                 print(f"{ch_drk}\n")
-                stars = 0
             else:
                 quit(self.start_game())
 
             while self.customers <= 3 and self.__running:
-                if self.__running:
-                    self.name = random.choice(self.character.name)
+                self.name = random.choice(self.character.name)
+                if self.__running is True:
+                    print("hello")
+                    print(self.name)
                     self.update()
 
                     if self.make.made_drink == self.make.character.option:
                         print(f"\nHurray, {self.name} is impressed")
                         self.log.log("Player impressed the customer")
-                        stars += 1
                     else:
                         print(f"\n{self.name} is disappointed")
 
                         self.achievement.unlock("You've disappointed your first customer...")
                         self.log.log("Player disappoints the customer")
-
                     self.customers = self.customers + 1
                     self.make.drink = None
                     self.make.made_drink = []  # bouthaynas line
                     self.interact = False
-
                     self.update()
                 else:
                     quit(self.start_game())
@@ -194,17 +190,6 @@ class Game:
             else:
                 self.achievement.unlock("You completed day 5!")
             self.day = self.day + 1
-
-            total_stars += stars  # sum of stars
-
-            print(f"You earned {stars} stars today!")
-            if self.day == 5:
-                print(f"You earned a total of {total_stars} this week!")
-
-            if total_stars == 15:
-                self.achievement.unlock("Maximum stars achieved!")
-            if total_stars == 0:
-                self.achievement.unlock("Wow, you did not earn a single star...")
 
 
     def continue_game(self):
