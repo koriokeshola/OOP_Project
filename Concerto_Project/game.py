@@ -2,6 +2,7 @@ from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
 import random
+from time import sleep
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
@@ -32,19 +33,26 @@ class Game:
         """The run method starts the game loop and provides an introduction to
         the game."""
         self.log.log("Game is running.")
-
-        print("You're stumbling around in the cold, you can't feel your face... "
-              "\nA strange figure approaches. You can't see in the harsh conditions."
-              "\nHe extends out his hand.. you reach out to take it."
-              "\nHe offers you a chance to redeem yourself, a nice job in a cosy cafe!"
-              "\nYou accept... reluctantly."
-              "\nNow your journey begins...")
-        print("\tG O L D E N   C A F É"
+        sleep_time = 1
+        print("You're stumbling around in the cold, you can't feel your face... ")
+        sleep(sleep_time)
+        print("A strange figure approaches. You can't see in the harsh conditions.")
+        sleep(sleep_time)
+        print("He extends out his hand.. you reach out to take it.")
+        sleep(sleep_time)
+        print("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
+        sleep(sleep_time)
+        print("You accept... reluctantly.")
+        sleep(sleep_time)
+        print("Now your journey begins...")
+        sleep(sleep_time)
+        print("            G O L D E N   C A F É"
               "\n*******************************************"
               "\n|                                         |"
               "\n|     Serving Coffee, Tea, and Boba!      |"
               "\n|                                         |"
               "\n*******************************************\n")
+        sleep(sleep_time * 2)
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
         while self.__running:
@@ -140,7 +148,6 @@ class Game:
             print(f"\nDay {self.day}")
             ch_drk = self.day_drink[self.day]
             print(f"{ch_drk}\n")
-            self.update()
 
             while self.customers <= 3:
                 self.name = random.choice(self.character.name)
@@ -162,5 +169,5 @@ class Game:
             self.day = self.day + 1
 
     def continue_game(self):
-        print("You continue working...\n")
+        print("You continue working...")
         self.log.log("Player continued working")
