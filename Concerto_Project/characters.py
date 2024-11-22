@@ -14,6 +14,10 @@ class Character(ABC):  # Make Character an abstract class
         self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
                      "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama"]
 
+    # @abstractmethod
+    def perform_action(self, name):
+        pass
+
     def coffee_option(self, name):
         #choice = randint(1, 5)
 
@@ -21,3 +25,6 @@ class Character(ABC):  # Make Character an abstract class
             print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
             self.option = ["c", "m", "n", "3", "hot", "n"]
 
+class RandomCustomer(Character):
+    def perform_action(self, name):
+        print(f"{name} is sitting enjoying their coffee. \"I don't need anything\"")
