@@ -154,7 +154,6 @@ class Game:
             print(f"{ch_drk}\n")
 
             while self.customers <= 3:
-                print("hello")
                 self.name = random.choice(self.character.name)
                 self.update()
 
