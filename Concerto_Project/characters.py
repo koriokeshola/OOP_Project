@@ -19,11 +19,27 @@ class Character(ABC):  # Make Character an abstract class
         pass
 
     def coffee_option(self, name):
-        #choice = randint(1, 5)
+        choice = randint(1, 5)
 
-        #if choice == 1:
+        if choice == 1:
             print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
             self.option = ["c", "m", "n", "3", "hot", "n"]
+        if choice == 2:
+            print(f"{name}: I want a large hot coffee, add some milk, dont make it sweet, \nforget the ice\n")
+            self.option = ["c", "l", "y", "1", "hot", "n"]
+        if choice == 3:
+            #cutie customer
+            print(f"{name}: MORNING, id like a medium ice cold coffee, with alot of milk. \nalot of sugar please!!\n")
+            self.option = ["c", "m", "y", "3", "cold", "y"]
+        if choice == 4:
+            print(f"{name}: can i get a small coffee, 1 sugar, no ice, add milk, \noh and make it really hot\n")
+            self.option = ["c", "s", "y", "1", "hot", "n"]
+        if choice == 5:
+            #rude customer
+            print(f"{name}: make me a medium sized hot black coffee, 1 sugar, no milk or ice, \nmake it quick\n")
+            self.option = ["c", "m", "n", "1", "hot", "n"]
+
+        
 
 class RandomCustomer(Character):
     def perform_action(self, name):
