@@ -17,7 +17,7 @@ class Game:
         self.start = False
         self.day = 1
         self.customers = 1
-        self.sleep_time = 1
+        self.sleep_time = 0
         self.make = MakeDrink()
         self.character = Character()
         self.name = None
