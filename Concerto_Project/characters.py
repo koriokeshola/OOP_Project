@@ -25,20 +25,25 @@ class Character(ABC):  # Make Character an abstract class
             print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
             self.option = ["c", "m", "n", "3", "hot", "n"]
         if choice == 2:
-            print(f"{name}: I want a large hot coffee, add some milk, dont make it sweet, \nforget the ice\n")
-            self.option = ["c", "l", "y", "1", "hot", "n"]
+            print(f"{name}: I want a large hot coffee, add some milk, dont make it sweet. \nForget the ice\n")
+            self.option = ["c", "l", "y", "0", "hot", "n"]
         if choice == 3:
             #cutie customer
-            print(f"{name}: MORNING, id like a medium ice cold coffee, with alot of milk. \nalot of sugar please!!\n")
+            print(f"{name}: MORNING, I'd like a medium ice cold coffee, with alot of milk. \nAlot of sugar please!!\n")
             self.option = ["c", "m", "y", "3", "cold", "y"]
         if choice == 4:
-            print(f"{name}: can i get a small coffee, 1 sugar, no ice, add milk, \noh and make it really hot\n")
+            print(f"{name}: Can I get a small coffee with not much sugar, no ice, and add milk. \nOh and make it really hot\n")
             self.option = ["c", "s", "y", "1", "hot", "n"]
         if choice == 5:
             #rude customer
-            print(f"{name}: make me a medium sized hot black coffee, 1 sugar, no milk or ice, \nmake it quick\n")
+            print(f"{name}: Make me a medium sized hot black coffee, 1 sugar, no milk or ice. \nChop chop, make it quick\n")
             self.option = ["c", "m", "n", "1", "hot", "n"]
 
+    def tea_options(self, name):
+        #choice = randint(1, 5)
+
+    def boba_options(self, name):
+        #choice = randint(1, 5)
         
 
 class RandomCustomer(Character):
