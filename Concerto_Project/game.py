@@ -17,6 +17,7 @@ class Game:
         self.start = False
         self.day = 1
         self.customers = 1
+        self.sleep_time = 1
         self.make = MakeDrink()
         self.character = Character()
         self.name = None
@@ -37,26 +38,26 @@ class Game:
         """The run method starts the game loop and provides an introduction to
         the game."""
         self.log.log("Game is running.")
-        sleep_time = 0
+
         print("You're stumbling around in the cold, you can't feel your face... ")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("A strange figure approaches. You can't see in the harsh conditions.")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("He extends out his hand.. you reach out to take it.")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("You accept... reluctantly.")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("Now your journey begins...")
-        sleep(sleep_time)
+        sleep(self.sleep_time)
         print("            G O L D E N   C A F É"
               "\n*******************************************"
               "\n|                                         |"
               "\n|     Serving Coffee, Tea, and Boba!      |"
               "\n|                                         |"
               "\n*******************************************\n")
-        sleep(sleep_time * 2)
+        sleep(self.sleep_time * 2)
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
         while self.__running:
@@ -130,7 +131,7 @@ class Game:
                         self.update()
 
     def drink_op(self):
-        print(f"Customer {self.customers}")
+        print(f"\nCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
         self.update()
 
@@ -139,6 +140,7 @@ class Game:
 
         self.make.make_drink(self.name)
         self.log.log("Player makes the drink")
+        self.interact = False
 
     def start_game(self):
         """The start_game method introduces the player to the mystery case and
@@ -161,26 +163,28 @@ class Game:
             while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
                 if self.__running is True:
-                    print("hello")
+                    #print("hello")
                     self.update()
 
-                    if self.make.made_drink == self.make.character.option:
-                        print(f"\nHurray, {self.name} is impressed")
-                        self.log.log("Player impressed the customer")
-                        stars += 1
-                    else:
-                        print(f"\n{self.name} is disappointed")
+                    if self.make.made_drink and self.interact == False:
+                        if self.make.made_drink == self.make.character.option:
+                            print(f"\nHurray, {self.name} is impressed")
+                            self.log.log(f"Player impressed {self.name} with perfect drink")
+                            stars += 1
+                        else:
+                            print(f"\n{self.name} is disappointed")
 
-                        self.achievement.unlock("You've disappointed your first customer...")
-                        self.log.log("Player disappoints the customer")
-                    self.customers = self.customers + 1
-                    self.make.drink = None
-                    self.make.made_drink = []  # bouthaynas line
-                    self.interact = False
-                    self.update()
+                            self.achievement.unlock("You've disappointed your first customer...")
+                            self.log.log(f"Player disappoints {self.name}")
+                        self.customers = self.customers + 1
+                        self.make.drink = None
+                        self.make.made_drink = []  # bouthaynas line
+                    else :
+                        self.log.log("Didn't Finish Job")
                 else:
                     quit(self.start_game())
             self.customers = 1
+            sleep(self.sleep_time * 2)
             if self.day == 1:
                 self.achievement.unlock("You survived your first day on the job!")
             elif self.day == 2:
@@ -194,17 +198,22 @@ class Game:
             self.day = self.day + 1
 
             total_stars += stars  # sum of stars
-            print(f"You earned {stars} stars today!")
+            if stars == 1:
+                print(f"You earned {stars} star today!")
+            else:
+                print(f"You earned {stars} stars today!")
+            sleep(self.sleep_time * 2)
             if self.day == 5:
                 print(f"You earned a total of {total_stars} this week!")
-            if total_stars == 15:
-                self.achievement.unlock("Maximum stars achieved!")
-            if total_stars == 0:
-                self.achievement.unlock("Wow, you did not earn a single star...")
-
+                sleep(self.sleep_time * 2)
+                if total_stars == 15:
+                    self.achievement.unlock("Maximum stars achieved!")
+                if total_stars == 0:
+                    self.achievement.unlock("Wow, you did not earn a single star...")
+            sleep(self.sleep_time * 2)
 
     def continue_game(self):
-        print("You continue working...")
+        print("You continue working...\n")
 
         # testing achievements
         self.achievement.unlock("You're a hard worker!")
