@@ -2,8 +2,12 @@ from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
 from achievements import Achievements  # imports achievement class
+from Design import printing_day
+from Design import type_text
 import random
 from time import sleep
+
+
 
 
 class Game:
@@ -39,24 +43,34 @@ class Game:
         the game."""
         self.log.log("Game is running.")
 
-        print("You're stumbling around in the cold, you can't feel your face... ")
+        type_text("You're stumbling around in the cold, you can't feel your face... ")
         sleep(self.sleep_time)
-        print("A strange figure approaches. You can't see in the harsh conditions.")
+        type_text("A strange figure approaches. You can't see in the harsh conditions.")
         sleep(self.sleep_time)
-        print("He extends out his hand.. you reach out to take it.")
+        type_text("He extends out his hand.. you reach out to take it.")
         sleep(self.sleep_time)
-        print("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
+        type_text("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
         sleep(self.sleep_time)
-        print("You accept... reluctantly.")
+        type_text("You accept... reluctantly.")
         sleep(self.sleep_time)
-        print("Now your journey begins...")
+        type_text("Now your journey begins...")
         sleep(self.sleep_time)
+        """
         print("            G O L D E N   C A F É"
               "\n*******************************************"
               "\n|                                         |"
               "\n|     Serving Coffee, Tea, and Boba!      |"
               "\n|                                         |"
               "\n*******************************************\n")
+        """
+        #using ANSI Escape Sequences for coloring text in
+        print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
+              "\n\033[1;36m*******************************************\033[0m"  # Cyan
+              "\n\033[1;36m|                                         |\033[0m")
+        type_text("\t serving Coffee, Tea, and Boba!")
+        print("\n\033[1;36m|                                         |\033[0m"
+              "\n\033[1;36m*******************************************\033[0m\n")  # Cyan
+
         sleep(self.sleep_time * 2)
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
@@ -153,9 +167,9 @@ class Game:
 
         while self.day <= 5 and self.__running:
             if self.__running is True:
-                print(f"\nDay {self.day}")
+                printing_day(self.day)  #prints what day it is  Seemas code
                 ch_drk = self.day_drink[self.day]
-                print(f"{ch_drk}\n")
+                print(f"\n{ch_drk}\n")
                 stars = 0
             else:
                 quit(self.start_game())
@@ -219,3 +233,4 @@ class Game:
         self.achievement.unlock("You're a hard worker!")
 
         self.log.log("Player continued working")
+
