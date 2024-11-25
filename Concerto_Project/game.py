@@ -238,4 +238,5 @@ class Game:
         self.achievement.unlock("You're a hard worker!")
         self.achievements += 1
         self.log.log("Player continued working")
+        self.update()
 
