@@ -14,6 +14,7 @@ class MakeDrink:
         self.sugar = None # 1, 2, or 3 spoons
         self.temp = None # hot, cold
         self.ice = None # yes, no, or extra
+        self.boba = None # normal or extra
         self.log = Loggable()
         self.error_log = Loggable()
 
@@ -95,10 +96,19 @@ class MakeDrink:
             print("Please pick y, n, or x\n")
             self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
 
+        if self.drink == "b":
+            while self.boba not in ["y", "n"]:
+                print("Please pick y or n\n")
+                self.boba = input(f"Did {name} want extra boba? yes or no?: [y, n]: ")  # yes or no
+
+
+
         self.made_drink.append(self.size)
         self.made_drink.append(self.milk)
         self.made_drink.append(self.sugar)
         self.made_drink.append(self.temp)
         self.made_drink.append(self.ice)
+        if (self.drink == "b"):
+            self.made_drink.append(self.boba)
 
         return self.made_drink
