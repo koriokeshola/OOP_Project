@@ -56,7 +56,7 @@ $$$$$$$          $$$$     $$$$         $$$$         444444444444  """)
 #function that animates text with typing effect
 def type_text(text, delay=0.1):
     for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
-    print()  # Move to the next line
+        sys.stdout.write(char) #Write one character at a time without creating newline like print
+        sys.stdout.flush() #forces character to display immediately rather than wait for buffer to fil
+        time.sleep(delay) #pauses for delays to create typing effect
+    print()  #Move to the next line
