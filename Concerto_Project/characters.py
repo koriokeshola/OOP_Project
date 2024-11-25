@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint
+import random
 
 class Character(ABC):  # Make Character an abstract class
     """In this solution, the Character class has been transformed into an
@@ -13,10 +14,6 @@ class Character(ABC):  # Make Character an abstract class
         self.option = []
         self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
                      "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama", "Humbleness Personified"]
-
-    # @abstractmethod
-    def perform_action(self, name):
-        pass
 
     def coffee_option(self, name):
         choice = randint(1, 5)
@@ -83,6 +80,36 @@ class Character(ABC):  # Make Character an abstract class
             self.option = ["c", "m", "n", "1", "h", "n", "y"]
         
 
-class RandomCustomer(Character):
-    def perform_action(self, name):
-        print(f"{name} is sitting enjoying their coffee. \"I don't need anything\"")
+class NPC(ABC):
+    def __init__(self, name):
+        self._name = name
+        self.new_dialogue = None
+        self.dialogue = ["Thank you for the drink today", "The drink I had is amazing", "Can I sit here? \nYou: Of course you can", "How are you barista? \nYou: I am alright, thank you for asking", "Can I order whenever I want to? \nYou: Yes you can"]
+
+    @abstractmethod  # Declares an abstract method using a decorator.
+    def perform_action(self):
+        pass  # Abstract methods never contain any actual logic. The
+        # transfer statement "pass" allows for this.
+
+    # An abstract class must contain at least one abstract method.
+    # However, "normal" methods may also be contained.
+
+class RandomCharacter(NPC):
+    def __init__(self, name):
+        super().__init__(name)
+        self.new_dialogue = None
+        self._interacted = False
+
+    # method used to perform the action of the friendly npc
+    def perform_action(self):
+        self.new_dialogue = random.choice(self.dialogue)
+        if self._interacted is False:
+            print(f"{self._name} gives you a warm smile.")
+            print(f"{self._name}: \"{self.new_dialogue}\"")
+            print(f"{self._name} decides to hang around in the cafe\n")
+
+class ConcreteNPC(NPC):
+    def perform_action(self):
+        self.new_dialogue = random.choice(self.dialogue)
+        print(f"{self._name} greets you politely.")
+        print(f"{self._name}: \"{self.new_dialogue}\"")
