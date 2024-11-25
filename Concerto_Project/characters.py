@@ -54,8 +54,8 @@ class Character(ABC):  # Make Character an abstract class
             self.option = ["t", "s", "y", "1", "c", "x"]
         elif choice == 3:
             # cutie customer
-            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no milk and no sugar. Thank you!\n")
-            self.option = ["c", "m", "y", "3", "c", "y"]
+            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no \nmilk and no sugar. Thank you!\n")
+            self.option = ["c", "m", "n", "3", "c", "y"]
         elif choice == 4:
             print(
                 f"{name}: Can I get a small tea with little sugar, no ice, and add milk. \nOh and make it really hot\n")
