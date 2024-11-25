@@ -1,6 +1,7 @@
 from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
+from characters import ConcreteNPC
 from achievements import Achievements  # imports achievement class
 from design import printing_day
 from design import type_text
