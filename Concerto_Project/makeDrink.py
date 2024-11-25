@@ -1,97 +1,104 @@
-from abc import ABC, abstractmethod
-from random import randint
+from loggable import Loggable
+from characters import Character
+import random
+from time import sleep
 
-
-class Character(ABC):  # Make Character an abstract class
-    """In this solution, the Character class has been transformed into an
-    abstract class by using the ABC class.
-    An abstract method named perform_action has been declared in the
-    Character class. The  then implement this
-    abstract method with specific actions that demonstrate polymorphism. """
-
+class MakeDrink:
     def __init__(self):
-        # Even in abstract classes we see encapsulation  as before.
-        self.option = []
-        self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
-                     "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama", "Humbleness Personified"]
+        self.drink = None
+        self.drink_name = None
+        self.made_drink = []
+        self.character = Character()
+        self.size = None # s, m or l
+        self.milk = None # yes or no
+        self.sugar = None # 1, 2, or 3 spoons
+        self.temp = None # hot, cold
+        self.ice = None # yes, no, or extra
+        self.log = Loggable()
+        self.error_log = Loggable()
 
-    # @abstractmethod
-    def perform_action(self, name):
-        pass
+    def drink_options(self, name, day):
+        # if not name:
+        #     print("name not set")
+        #     return
 
-    def coffee_option(self, name):
-        choice = randint(1, 5)
+        drink_per_day = {
+            1: "c", # coffee only
+            2: "t", # tea only
+            3: random.choice(["c", "t"]), # coffee and tea
+            4: "b", # boba only
+            5: random.choice(["c", "t", "b"]) # all three
+        }
 
-        if choice == 1:
-            print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
-            self.option = ["c", "m", "n", "3", "h", "n"]
-        elif choice == 2:
-            print(f"{name}: I want a large hot coffee, add some milk, dont make it sweet. \nForget the ice\n")
-            self.option = ["c", "l", "y", "0", "h", "n"]
-        elif choice == 3:
-            # cutie customer
-            print(f"{name}: MORNING, I'd like a medium ice cold coffee, with alot of milk. \nAlot of sugar please!!\n")
-            self.option = ["c", "m", "y", "3", "c", "y"]
-        elif choice == 4:
-            print(
-                f"{name}: Can I get a small coffee with not much sugar, no ice, and add milk. \nOh and make it really hot\n")
-            self.option = ["c", "s", "y", "1", "h", "n"]
-        elif choice == 5:
-            # rude customer
-            print(
-                f"{name}: Make me a medium sized hot black coffee, 1 sugar, no milk or ice. \nChop chop, make it quick\n")
-            self.option = ["c", "m", "n", "1", "h", "n"]
+        # finds out the day number
+        day_chosen = drink_per_day[day]
 
-    def tea_option(self, name):
-        choice = randint(1, 5)
-
-        if choice == 1:
-            print(f"{name}: I would like a hot medium sized tea, lots of sugar and add milk please. \nForget the ice\n")
-            self.option = ["t", "m", "y", "3", "h", "n"]
-        elif choice == 2:
-            print(
-                f"{name}: Can I get a small iced tea with milk and extra ice? \nCan you put a little sugar in it as well?\n")
-            self.option = ["t", "s", "y", "1", "c", "x"]
-        elif choice == 3:
-            # cutie customer
-            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no \nmilk and no sugar. Thank you!\n")
-            self.option = ["c", "m", "n", "3", "c", "y"]
-        elif choice == 4:
-            print(
-                f"{name}: Can I get a small tea with little sugar, no ice, and add milk. \nOh and make it really hot\n")
-            self.option = ["c", "s", "y", "1", "h", "n"]
-        elif choice == 5:
-            # rude customer
-            print(
-                f"{name}: Make me a large hot tea as fast as you can, A LOT of sugar, no milk or ice. \nQuickly, don't waste my time.\n")
-            self.option = ["c", "m", "n", "1", "h", "n"]
-
-    def boba_option(self, name):
-        choice = randint(1, 5)
-
-        if choice == 1:
-            print(f"{name}: I would like a large, cold boba with milk and 1 sugar.\nExtra ice please!\n")
-            self.option = ["b", "l", "y", "1", "cold", "x"]
-        if choice == 2:
-            print(
-                f"{name}: I want a warm boba in the biggest cup you have, lots of milk and no sugar. \nNo ice please!\n")
-            self.option = ["b", "l", "y", "0", "hot", "n"]
-        if choice == 3:
-            # cutie customer
-            print(
-                f"{name}: MORNING! I'd like a medium cold boba, with some milk. \nOne sugar, no ice and please take your time!!\n")
-            self.option = ["b", "m", "y", "1", "cold", "n"]
-        if choice == 4:
-            print(
-                f"{name}: Can I get a small cold boba, with milk and a LOT of sugar. \nI'd like some ice too.\n")
-            self.option = ["b", "s", "y", "3", "cold", "y"]
-        if choice == 5:
-            # rude customer
-            print(
-                f"{name}: I want a big cup of boba, tiny bit of sugar, no milk and some ice. \nI haven't got all day ya know!\n")
-            self.option = ["b", "l", "n", "1", "cold", "y"]
+        if day_chosen == "c":
+            self.character.coffee_option(name)
+        elif day_chosen == "t":
+            self.character.tea_option(name)
+        elif day_chosen == "b":
+            self.character.boba_option(name)
 
 
-class RandomCustomer(Character):
-    def perform_action(self, name):
-        print(f"{name} is sitting enjoying their coffee. \"I don't need anything\"")
+    # allows the user to choose the drink
+    def drink_choice(self):
+        self.drink = input("What drink do you want to make. \n"
+                           "'c' for coffee\n"
+                           "'t' for tea\n"
+                           "'b' for boba\n"
+                           "Enter the drink you want to make: ")
+
+        if self.drink not in ["c", "t", "b"]:
+            print("This is not a drink option, try again!\n")
+            self.drink_choice()
+        else:
+            self.made_drink.append(self.drink)
+
+            if self.drink == "c":
+                self.drink_name = "coffee"
+            elif self.drink == "t":
+                self.drink_name = "tea"
+            elif self.drink == "b":
+                self.drink_name = "boba"
+
+        return self.drink
+
+    def make_drink(self, name):
+        self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
+        sleep(.5)
+        while self.size not in ["s", "m", "l"]:
+            print("Please pick s, m, or l\n")
+            self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
+
+        self.milk = input(f"Did {name} want milk? yes or no?: [y, n]: ")  # yes or no
+        sleep(.5)
+        while self.milk not in ["y", "n"]:
+            print("Please pick y or n\n")
+            self.milk = input(f"Did {name} want milk? yes or no?: [y, n]: ")  # yes or no
+
+        self.sugar = input(f"Did {name} want 0, 1 or 3 spoons of sugar? [0, 1, 3]: ")  # 0, 1, or 3 spoons
+        sleep(.5)
+        while self.sugar not in ["0", "1", "3"]:
+            print("Please pick 0, 1, or 3\n")
+            self.sugar = input(f"Did {name} want 0, 1 or 3 spoons of sugar? [0, 1, 3]: ")  # 0, 1, or 3 spoons
+
+        self.temp = input(f"Did {name} want their {self.drink_name} hot or cold?: [h, c]: ")  # hot, cold
+        sleep(.5)
+        while self.temp not in ["h", "c"]:
+            print("Please pick hot or cold\n")
+            self.temp = input(f"Did {name} want their {self.drink_name} hot or cold?: [h, c]:  ")  # hot, cold
+
+        self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
+        sleep(.5)
+        while self.ice not in ["y", "n", "x"]:
+            print("Please pick y, n, or x\n")
+            self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
+
+        self.made_drink.append(self.size)
+        self.made_drink.append(self.milk)
+        self.made_drink.append(self.sugar)
+        self.made_drink.append(self.temp)
+        self.made_drink.append(self.ice)
+
+        return self.made_drink
