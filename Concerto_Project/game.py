@@ -2,8 +2,8 @@ from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
 from achievements import Achievements  # imports achievement class
-from Design import printing_day
-from Design import type_text
+from design import printing_day
+from design import type_text
 import random
 from time import sleep
 
@@ -55,13 +55,13 @@ class Game:
         sleep(self.sleep_time)
         type_text("Now your journey begins...")
         sleep(self.sleep_time)
-        """
-        print("            G O L D E N   C A F É"
-              "\n*******************************************"
-              "\n|                                         |"
-              "\n|     Serving Coffee, Tea, and Boba!      |"
-              "\n|                                         |"
-              "\n*******************************************\n")
+        
+        print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
+              "\n\033[1;36m*******************************************\033[0m"  # Cyan
+              "\n\033[1;36m|                                         |\033[0m"
+              "\n\033[1;36m|\033[0m     Serving Coffee, Tea, and Boba!      \033[1;36m|\033[0m"
+              "\n\033[1;36m|                                         |\033[0m"
+              "\n\033[1;36m*******************************************\033[0m")  # Cyan
         """
         #using ANSI Escape Sequences for coloring text in
         print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
@@ -70,7 +70,7 @@ class Game:
         type_text("\t serving Coffee, Tea, and Boba!")
         print("\n\033[1;36m|                                         |\033[0m"
               "\n\033[1;36m*******************************************\033[0m\n")  # Cyan
-
+        """
         sleep(self.sleep_time * 2)
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
