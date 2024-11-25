@@ -20,6 +20,7 @@ class Game:
         self.day = 1
         self.customers = 1
         self.sleep_time = 0
+        self.achievements = 0
         self.make = MakeDrink()
         self.character = Character()
         self.name = None
