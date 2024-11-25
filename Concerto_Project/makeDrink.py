@@ -35,10 +35,10 @@ class MakeDrink:
 
         if day_chosen == "c":
             self.character.coffee_option(name)
-        # elif day_chosen == "t":
-        #     self.character.tea_option(name)
-        # elif day_chosen == "b":
-        #     self.character.boba_option(name)
+        elif day_chosen == "t":
+            self.character.tea_option(name)
+        elif day_chosen == "b":
+            self.character.boba_option(name)
 
 
     # allows the user to choose the drink
