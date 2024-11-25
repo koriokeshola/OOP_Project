@@ -50,7 +50,7 @@ class Character(ABC):  # Make Character an abstract class
             self.option = ["t", "s", "y", "1", "c", "x"]
         elif choice == 3:
             #cutie customer
-            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no milk and no sugar. thank you\n")
+            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no milk and no sugar. Thank you!\n")
             self.option = ["c", "m", "y", "3", "c", "y"]
         elif choice == 4:
             print(f"{name}: Can I get a small tea with little sugar, no ice, and add milk. \nOh and make it really hot\n")
@@ -64,22 +64,24 @@ class Character(ABC):  # Make Character an abstract class
         choice = randint(1, 5)
 
         if choice == 1:
-            print(f"{name}: I would like a medium sized, hot coffee without milk and 3 sugars.\nPlease no ice\n")
-            self.option = ["c", "m", "n", "3", "h", "n"]
-        elif choice == 2:
-            print(f"{name}: I want a large hot coffee, add some milk, dont make it sweet. \nForget the ice\n")
-            self.option = ["c", "l", "y", "0", "h", "n"]
-        elif choice == 3:
-            #cutie customer
-            print(f"{name}: MORNING, I'd like a medium ice cold coffee, with alot of milk. \nAlot of sugar please!!\n")
-            self.option = ["c", "m", "y", "3", "c", "y"]
-        elif choice == 4:
-            print(f"{name}: Can I get a small coffee with not much sugar, no ice, and add milk. \nOh and make it really hot\n")
-            self.option = ["c", "s", "y", "1", "h", "n"]
-        elif choice == 5:
-            #rude customer
-            print(f"{name}: Make me a medium sized hot black coffee, 1 sugar, no milk or ice. \nChop chop, make it quick\n")
-            self.option = ["c", "m", "n", "1", "h", "n"]
+            print(f"{self.current_name}: I would like a large, cold boba with milk and 1 sugar.\nExtra ice please!\n")
+            self.option = ["b", "l", "y", "1", "cold", "x"]
+        if choice == 2:
+            print(f"{self.current_name}: I want a warm boba in the biggest cup you have, lots of milk and no sugar. \nNo ice please!\n")
+            self.option = ["b", "l", "y", "0", "hot", "n"]
+        if choice == 3:
+            # cutie customer
+            print(f"{self.current_name}: MORNING! I'd like a medium cold boba, with some milk. \nOne sugar, no ice and please take your time!!\n")
+            self.option = ["b", "m", "y", "1", "cold", "n"]
+        if choice == 4:
+            print(
+                f"{self.current_name}: Can I get a small cold boba, with milk and a LOT of sugar. \nI'd like some ice too.\n")
+            self.option = ["b", "s", "y", "3", "cold", "y"]
+        if choice == 5:
+            # rude customer
+            print(
+                f"{self.current_name}: I want a big cup of boba, tiny bit of sugar, no milk and some ice. \nI haven't got all day ya know!\n")
+            self.option = ["b", "l", "n", "1", "cold", "y"]
         
 
 class RandomCustomer(Character):
