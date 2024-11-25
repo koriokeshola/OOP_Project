@@ -22,6 +22,7 @@ class Game:
         self.day = 1
         self.customers = 1
         self.sleep_time = 0
+        self.achievements = 0
         self.make = MakeDrink()
         self.character = Character()
         self.name = None
@@ -189,6 +190,7 @@ class Game:
                             print(f"\n{self.name} is disappointed")
 
                             self.achievement.unlock("You've disappointed your first customer...")
+                            self.achievements += 1
                             self.log.log(f"Player disappoints {self.name}")
                         self.customers = self.customers + 1
                         self.make.drink = None
@@ -209,6 +211,7 @@ class Game:
                 self.achievement.unlock("You completed day 4!")
             else:
                 self.achievement.unlock("You completed day 5!")
+            self.achievements += 1
             self.day = self.day + 1
 
             total_stars += stars  # sum of stars
@@ -220,17 +223,21 @@ class Game:
             if self.day == 5:
                 print(f"You earned a total of {total_stars} this week!")
                 sleep(self.sleep_time * 2)
+                self.achievements += 1
                 if total_stars == 15:
                     self.achievement.unlock("Maximum stars achieved!")
+                    self.achievements += 1
                 if total_stars == 0:
                     self.achievement.unlock("Wow, you did not earn a single star...")
+                    self.achievements += 1
             sleep(self.sleep_time * 2)
+            type_text(f"\nAchievements Unlocked: {self.achievements}")
 
     def continue_game(self):
         print("You continue working...\n")
 
         # testing achievements
         self.achievement.unlock("You're a hard worker!")
-
+        self.achievements += 1
         self.log.log("Player continued working")
 
