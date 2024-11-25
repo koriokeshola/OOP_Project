@@ -7,9 +7,6 @@ from design import type_text
 import random
 from time import sleep
 
-
-
-
 class Game:
     """The Game class is set up to manage the game's behavior."""
 
@@ -116,8 +113,8 @@ class Game:
                     self.rules()
                     self.log.log("Player checks the rules")
         else:  # if user chooses to continue they get more options
-            while player_input not in ["q", "i", "m", "c"]:
-                player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, or 'c' to continue: ")
+            while player_input not in ["q", "i", "m", "c", "r"]:
+                player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, or\n'r' for NPC interaction: ")
                 if player_input.lower() == "q":  # quits game
                     self.__running = False
                     filename = input(
@@ -143,7 +140,17 @@ class Game:
                     else:
                         print("You need to interact with the customer first.\n")
                         self.update()
+                elif player_input.lower() == "r":
+                    self.interact_with_customers()
 
+    def interact_with_customers(self):
+        self.name = random.choice(self.character.name)
+        print("")
+        npc = ConcreteNPC(self.name)
+        npc.perform_action()
+        print("")
+        self.update()
+    
     def drink_op(self):
         print(f"\nCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
