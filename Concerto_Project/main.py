@@ -1,29 +1,38 @@
-# CMPU 2016 Object-Oriented Programming
-# TU857-2
-# 26/09/24, Semester 1: Python with Blessing Ugochukwu, C23342083
+################################################################################
+# CMPU 2016 OOP – TU857/2 - Semester 1 Assignment.
+# Group: Concero
+# Members:
+# 1. Blessing Ugochukwu (student ID: C23342083).
+# 2. Renée Low (student ID: C23321923).
+# 3. Kori Okeshola (student ID: C23401212).
+# 4. Bouthayna Metarfi (student ID: C23306091).
+# 5. Bartosz (student ID: C23306091).
+# 6. Seema Alazhari (student ID: C23405732).
+# Date: November 26, 2024.
 #
-# Mystery Adventure Game - Week 1 Lab Template
-# Introduction to Mystery Adventure Game Development
-# Setting up the initial game environment and introduction scene
+# Game Expansion Explanation:
+# In our project, we created a game with a café theme where players are a barista in the café
+# and interacts with customers and takes their orders, then makes the customer's order by choosing
+# the available options. We've implemented an achhievemnts that players can unlock,
+# levels that unlocks new menus, a system to log the player interactions and a star system
+# where players can earn stars based on if they've made a customer's order correctly.
 #
-# Learning objectives lab week 1:
-# 1. Understand Basic Python Programming:
-#    - Familiarize yourself with the structure of a Python script.
-#    - Identify the role of classes and methods in Python code.
-# 2. Handle User Input:
-#    - Learn to use the input() function to receive user input.
-#    - Practice capturing and processing user choices and responses.
-# 3. Apply If-Else Statements:
-#    - Understand the concept of conditional statements.
-#    - Learn to use if-else statements to control program flow based on
-#    conditions.
-# 4. Enhance User Experience:
-#    - Explore techniques to make user interactions more engaging and immersive.
-#    - Learn to incorporate descriptive text and narrative elements into your
-#    program.
-# 5. Modify Menu Options Dynamically:
-#    - Understand how to change menu options based on the game's state.
-#    - Learn to dynamically adjust user choices to match the game's progression.
+# File Structure:
+# - main_game.py: The main game script.
+# - achievements.py: Module for handling achievements.
+# - makeDrink.py: Module for making drinks.
+# - game.py: Module containing game content.
+# - loggable.py: Module for logging interactions.
+# - characters.py: Module containing character player interacts with.
+# - design.py: Module containing design for the days.
+#
+# Running the Game:
+# - To play "The Golden Café" with our expansions, run the "main_game.py" file.
+# - ensure that the modules for "achievements.py" "game.py", "loggable.py", "makeDrink.py", "character.py" and "design.py
+# are there for full functionality of the game.
+
+# Enjoy the game and have fun being a barista.
+################################################################################
 from game import Game
 
 # runs the game from the Game function
