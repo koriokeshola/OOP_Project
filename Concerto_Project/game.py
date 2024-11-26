@@ -8,6 +8,7 @@ from design import type_text
 import random
 from time import sleep
 
+
 class Game:
     """The Game class is set up to manage the game's behavior."""
 
@@ -24,6 +25,7 @@ class Game:
         self.make = MakeDrink()
         self.character = Character()
         self.name = None
+        self.npc_name = None
         self.interact = False
         self.day_drink = {
             1: "Serving Coffee Only Today",  # coffee only
@@ -54,7 +56,7 @@ class Game:
         sleep(self.sleep_time)
         type_text("Now your journey begins...")
         sleep(self.sleep_time)
-        
+
         print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
               "\n\033[1;36m*******************************************\033[0m"  # Cyan
               "\n\033[1;36m|                                         |\033[0m"
@@ -124,10 +126,11 @@ class Game:
         except Exception as e:
             print(f"Error: {e}. An unexpected error occurred.")
             self.log.log(f"Unexpected Error: {e}")
-            self._running = False # stop game upon critical error
+            self._running = False  # stop game upon critical error
         else:  # if user chooses to continue they get more options
             while player_input not in ["q", "i", "m", "c", "r"]:
-                player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, or\n'r' for NPC interaction: ")
+                player_input = input(
+                    "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, or\n'r' for NPC interaction: ")
                 if player_input.lower() not in ["q", "i", "m", "c", "r"]:
                     raise ValueError("Please choose a valid letter")
                 if player_input.lower() == "q":  # quits game
@@ -159,13 +162,13 @@ class Game:
                     self.interact_with_customers()
 
     def interact_with_customers(self):
-        self.name = random.choice(self.character.name)
+        self.npc_name = random.choice(self.character.name)
         print("")
-        npc = ConcreteNPC(self.name)
+        npc = ConcreteNPC(self.npc_name)
         npc.perform_action()
         print("")
         self.update()
-    
+
     def drink_op(self):
         print(f"\nCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
@@ -189,7 +192,7 @@ class Game:
 
         while self.day <= 5 and self.__running:
             if self.__running:
-                printing_day(self.day)  #prints what day it is  Seemas code
+                printing_day(self.day)  # prints what day it is  Seemas code
                 ch_drk = self.day_drink[self.day]
                 print(f"\n{ch_drk}\n")
                 stars = 0
@@ -199,26 +202,29 @@ class Game:
             while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
                 if self.__running:
-                    #print("hello")
+                    # print("hello")
                     self.update()
 
                     if self.make.made_drink and self.interact == False:
+                        print(f"\n{self.name} collects their drink and takes a sip...")
+                        sleep(self.sleep_time)
                         if self.make.made_drink == self.make.character.option:
-                            print(f"\nHurray, {self.name} is impressed")
+                            print(f"{self.name}: Thank you! This is delicious!")
                             self.log.log(f"Player impressed {self.name} with perfect drink")
                             stars += 1
                         else:
-                            print(f"\n{self.name} is disappointed")
+                            print(f"{self.name}: EUGH!! This is NOT what I ordered!"
+                                  f"\n{self.name} is disappointed")
 
                             self.achievement.unlock("You've disappointed your first customer...")
                             self.log.log(f"Achievement unlocked: Player disappoints {self.name}")
                         self.customers = self.customers + 1
                         self.make.drink = None
                         self.make.made_drink = []  # bouthaynas line
-                    else :
+                    else:
                         self.log.log("Didn't Finish Job")
                 else:
-                    #quit(self.start_game())
+                    # quit(self.start_game())
                     return
             self.customers = 1
             sleep(self.sleep_time * 2)
