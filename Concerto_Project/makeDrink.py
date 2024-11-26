@@ -4,25 +4,33 @@ import random
 from time import sleep
 
 class MakeDrink:
+    """
+    A class that manages the process of making drinks based on customer orders.
+    There are options coffee, tea and boba and allows user input to make the drinks according to the customers order
+    """
     def __init__(self):
-        self.drink = None
-        self.drink_name = None
-        self.made_drink = []
-        self.character = Character()
+        self.drink = None #drink options (c,t,b)
+        self.drink_name = None #full length of drink's name (coffe, tea, boba)
+        self.made_drink = [] #stores drink details
+        self.character = Character() #customer interactions
         self.size = None # s, m or l
         self.milk = None # yes or no
         self.sugar = None # 1, 2, or 3 spoons
         self.temp = None # hot, cold
         self.ice = None # yes, no, or extra
         self.boba = None # normal or extra
-        self.log = Loggable()
-        self.error_log = Loggable()
+        self.log = Loggable() #instance for logging actions
+        self.error_log = Loggable() #instance logging errors
 
     def drink_options(self, name, day):
-        # if not name:
-        #     print("name not set")
-        #     return
-
+        """
+        Determines the type of drink the customer can order basaed on the day.
+        day 1 = coffee
+        day 2 = tea
+        day 3 = coffee or tea
+        day 4 = boba
+        day 5 = all three
+        """
         drink_per_day = {
             1: "c", # coffee only
             2: "t", # tea only
@@ -33,7 +41,7 @@ class MakeDrink:
 
         # finds out the day number
         day_chosen = drink_per_day[day]
-
+        
         if day_chosen == "c":
             self.character.coffee_option(name)
         elif day_chosen == "t":
@@ -44,18 +52,20 @@ class MakeDrink:
 
     # allows the user to choose the drink
     def drink_choice(self):
+        #allows user to choose make the drinks
         self.drink = input("What drink do you want to make. \n"
                            "'c' for coffee\n"
                            "'t' for tea\n"
                            "'b' for boba\n"
                            "Enter the drink you want to make: ")
-
+        #checks if you've entered valid inputs
         if self.drink not in ["c", "t", "b"]:
             print("This is not a drink option, try again!\n")
             self.drink_choice()
         else:
+            #appends chosen drink type to the made_drink list
             self.made_drink.append(self.drink)
-
+    
             if self.drink == "c":
                 self.drink_name = "coffee"
             elif self.drink == "t":
@@ -66,6 +76,7 @@ class MakeDrink:
         return self.drink
 
     def make_drink(self, name):
+        #making the drink options
         self.size = input(f"Did {name} want small, medium, or large? [s, m, l]: ")  # s, m or l
         sleep(.5)
         while self.size not in ["s", "m", "l"]:
@@ -102,7 +113,7 @@ class MakeDrink:
                 self.boba = input(f"Did {name} want extra boba? yes or no?: [y, n]: ")  # yes or no
 
 
-
+        # appends options to the made_drink list
         self.made_drink.append(self.size)
         self.made_drink.append(self.milk)
         self.made_drink.append(self.sugar)
