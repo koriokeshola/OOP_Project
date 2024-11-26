@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint
+import random
 
 class Character(ABC):  # Make Character an abstract class
     """In this solution, the Character class has been transformed into an
@@ -29,7 +30,7 @@ class Character(ABC):  # Make Character an abstract class
             self.option = ["c", "l", "y", "0", "h", "n"]
         elif choice == 3:
             #cutie customer
-            print(f"{name}: Hello, I'd like to get a large ice cold tea, with no \nmilk and no sugar. Thank you!\n")
+            print(f"{name}: Hello, I'd like to get a large ice cold coffee, with no \nmilk and no sugar. Thank you!\n")
             self.option = ["c", "m", "n", "3", "c", "y"]
         elif choice == 4:
             print(f"{name}: Can I get a small coffee with not much sugar, no ice, and add milk. \nOh and make it really hot\n")
@@ -80,9 +81,8 @@ class Character(ABC):  # Make Character an abstract class
         elif choice == 5:
             #rude customer
             print(f"{name}: I don't have all day so make me a small sized hot boba, very sweet with no milk or ice and extra pearls. \n Move it along now.\n")
-            self.option = ["c", "m", "n", "1", "h", "n", "y"]
+            self.option = ["b", "s", "n", "3", "h", "n", "y"]
         
-
 class NPC(ABC):
     def __init__(self, name):
         self._name = name
