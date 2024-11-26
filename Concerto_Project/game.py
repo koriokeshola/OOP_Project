@@ -94,29 +94,42 @@ class Game:
     def update(self):
         """The update method waits for player input and responds to their
         choice to start the game or quit."""
-        player_input = None
-        if not self.start:
-            while player_input not in ["q", "r", "s"]:
-                player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
-                if player_input.lower() == "q":
-                    # we exit the game running loop by setting this flag variable
-                    # to False
-                    self.__running = False
-                    filename = input(
-                        "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
-                    self.log.save_logs_to_file(filename)
-                    self.log.log("Player quits the game")
-                    self.__running = False
-                elif player_input.lower() == "s":
-                    self.start = True
-                    self.start_game()
-                    self.log.log("Player starts the game")
-                elif player_input.lower() == "r":
-                    self.rules()
-                    self.log.log("Player checks the rules")
+        try:
+            player_input = None
+            if not self.start:
+                while player_input not in ["q", "r", "s"]:
+                    player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
+                    if player_input.lower() not in ["q", "r", "s"]:
+                        raise ValueError("Please choose a valid letter")
+                    if player_input.lower() == "q":
+                        # we exit the game running loop by setting this flag variable
+                        # to False
+                        self.__running = False
+                        filename = input(
+                            "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                        self.log.save_logs_to_file(filename)
+                        self.log.log("Player quits the game")
+                        self.__running = False
+                    elif player_input.lower() == "s":
+                        self.start = True
+                        self.start_game()
+                        self.log.log("Player starts the game")
+                    elif player_input.lower() == "r":
+                        self.rules()
+                        self.log.log("Player checks the rules")
+        except ValueError as ve:
+            print(f"Error: {ve}. Please try again")
+            self.log.log(f"Incorrect Input: {ve}")
+            # self.update()
+        except Exception as e:
+            print(f"Error: {e}. An unexpected error occurred.")
+            self.log.log(f"Unexpected Error: {e}")
+            self._running = False # stop game upon critical error
         else:  # if user chooses to continue they get more options
             while player_input not in ["q", "i", "m", "c", "r"]:
                 player_input = input("Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, or\n'r' for NPC interaction: ")
+                if player_input.lower() not in ["q", "i", "m", "c", "r"]:
+                    raise ValueError("Please choose a valid letter")
                 if player_input.lower() == "q":  # quits game
                     self.__running = False
                     filename = input(
@@ -128,7 +141,7 @@ class Game:
                     self.log.log("Player continued working")
                     self.continue_game()
                 elif player_input.lower() == "i":  # interacts with customer
-                    if self.interact is not True:
+                    if not self.interact:
                         self.log.log("Player talks to the customer")
                         self.interact = True
                         self.drink_op()
@@ -136,7 +149,7 @@ class Game:
                         print(f"You already interacted with the {self.name}, please make their drink.\n")
                         self.update()
                 elif player_input.lower() == "m":  # chooses a door
-                    if self.interact is True:
+                    if self.interact:
                         self.log.log("Player chooses to make a drink")
                         self.make_drink()
                     else:
@@ -175,17 +188,17 @@ class Game:
         total_stars = 0
 
         while self.day <= 5 and self.__running:
-            if self.__running is True:
+            if self.__running:
                 printing_day(self.day)  #prints what day it is  Seemas code
                 ch_drk = self.day_drink[self.day]
                 print(f"\n{ch_drk}\n")
                 stars = 0
             else:
-                quit(self.start_game())
+                return
 
             while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
-                if self.__running is True:
+                if self.__running:
                     #print("hello")
                     self.update()
 
@@ -205,7 +218,8 @@ class Game:
                     else :
                         self.log.log("Didn't Finish Job")
                 else:
-                    quit(self.start_game())
+                    #quit(self.start_game())
+                    return
             self.customers = 1
             sleep(self.sleep_time * 2)
             if self.day == 1:
