@@ -6,7 +6,7 @@
 # 2. Renée Low (student ID: C23321923).
 # 3. Kori Okeshola (student ID: C23401212).
 # 4. Bouthayna Metarfi (student ID: C23306091).
-# 5. Bartosz (student ID: C23306091).
+# 5. Bartosz (student ID: C23398751).
 # 6. Seema Alazhari (student ID: C23405732).
 # Date: November 26, 2024.
 #
@@ -25,6 +25,7 @@
 # - loggable.py: Module for logging interactions.
 # - characters.py: Module containing character player interacts with.
 # - design.py: Module containing design for the days.
+# - reviews.py: Module containing a hidden reviews list from customers.
 #
 # Running the Game:
 # - To play "The Golden Café" with our expansions, run the "main_game.py" file.
