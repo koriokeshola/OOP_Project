@@ -3,6 +3,7 @@ from makeDrink import MakeDrink
 from characters import Character
 from characters import ConcreteNPC
 from achievements import Achievements  # imports achievement class
+from reviews import Reviews
 from design import printing_day
 from design import type_text
 import random
@@ -24,9 +25,12 @@ class Game:
         self.achievements = 0
         self.make = MakeDrink()
         self.character = Character()
+        self.review = Reviews()
         self.name = None
         self.npc_name = None
         self.interact = False
+        self.player_input = None
+        self.review_count = 0
         self.day_drink = {
             1: "Serving Coffee Only Today",  # coffee only
             2: "Serving Tea Only Today",  # tea only
@@ -97,13 +101,13 @@ class Game:
         """The update method waits for player input and responds to their
         choice to start the game or quit."""
         try:
-            player_input = None
+            self.player_input = None
             if not self.start:
-                while player_input not in ["q", "r", "s"]:
-                    player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
-                    if player_input.lower() not in ["q", "r", "s"]:
+                while self.player_input not in ["q", "r", "s"]:
+                    self.player_input = input("Press 'q' to quit, 'r' for rules or 's' to start: ")
+                    if self.player_input.lower() not in ["q", "r", "s"]:
                         raise ValueError("Please choose a valid letter")
-                    if player_input.lower() == "q":
+                    if self.player_input.lower() == "q":
                         # we exit the game running loop by setting this flag variable
                         # to False
                         self.__running = False
@@ -112,11 +116,11 @@ class Game:
                         self.log.save_logs_to_file(filename)
                         self.log.log("Player quits the game")
                         self.__running = False
-                    elif player_input.lower() == "s":
+                    elif self.player_input.lower() == "s":
                         self.start = True
                         self.start_game()
                         self.log.log("Player starts the game")
-                    elif player_input.lower() == "r":
+                    elif self.player_input.lower() == "r":
                         self.rules()
                         self.log.log("Player checks the rules")
         except ValueError as ve:
@@ -128,22 +132,27 @@ class Game:
             self.log.log(f"Unexpected Error: {e}")
             self._running = False  # stop game upon critical error
         else:  # if user chooses to continue they get more options
-            while player_input not in ["q", "i", "m", "c", "r"]:
-                player_input = input(
-                    "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, or\n'r' for NPC interaction: ")
-                if player_input.lower() not in ["q", "i", "m", "c", "r"]:
-                    raise ValueError("Please choose a valid letter")
-                if player_input.lower() == "q":  # quits game
+            while self.player_input not in ["q", "i", "m", "c", "n", "r"]:
+                self.player_input = input(
+                    "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, \n'r' to see reviews or 'n' for NPC interaction: ")
+                if self.player_input.lower() == "q":  # quits game
                     self.__running = False
                     filename = input(
                         "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
                     self.log.save_logs_to_file(filename)
                     self.log.log("Player quits the game")
                     self.__running = False
-                elif player_input.lower() == "c":  # continues game
+                elif self.player_input.lower() == "c":  # continues game
                     self.log.log("Player continued working")
                     self.continue_game()
-                elif player_input.lower() == "i":  # interacts with customer
+                elif self.player_input.lower() == "r": #reviews list
+                    if self.review_count <= 0:
+                        print("You have not gotten any reviews yet.")
+                    else:
+                        print("\033[1;32;40mReviews:\033[0m")
+                        for item in self.review.reviews: 
+                            print(item, " ") 
+                elif self.player_input.lower() == "i":  # interacts with customer
                     if not self.interact:
                         self.log.log("Player talks to the customer")
                         self.interact = True
@@ -151,14 +160,14 @@ class Game:
                     else:
                         print(f"You already interacted with the {self.name}, please make their drink.\n")
                         self.update()
-                elif player_input.lower() == "m":  # chooses a door
+                elif self.player_input.lower() == "m":  # chooses a door
                     if self.interact:
                         self.log.log("Player chooses to make a drink")
                         self.make_drink()
                     else:
                         print("You need to interact with the customer first.\n")
                         self.update()
-                elif player_input.lower() == "r":
+                elif self.player_input.lower() == "n":
                     self.interact_with_customers()
 
     def interact_with_customers(self):
@@ -202,30 +211,34 @@ class Game:
             while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
                 if self.__running:
-                    # print("hello")
-                    self.update()
+                    if self.player_input is not "q":
+                        self.update() 
 
-                    if self.make.made_drink and self.interact == False:
-                        print(f"\n{self.name} collects their drink and takes a sip...")
-                        sleep(self.sleep_time)
-                        if self.make.made_drink == self.make.character.option:
-                            print(f"{self.name}: Thank you! This is delicious!")
-                            self.log.log(f"Player impressed {self.name} with perfect drink")
-                            stars += 1
+                        if self.make.made_drink and self.interact == False:
+                            print(f"\n{self.name} collects their drink and takes a sip...")
+                            sleep(self.sleep_time)
+                            if self.make.made_drink == self.make.character.option:
+                                print(f"{self.name}: Thank you! This is delicious!")
+                                self.log.log(f"Player impressed {self.name} with perfect drink")
+                                stars += 1
+                                self.review_count =+ 1
+                                self.review.add_good_reviews(self.name)
+                            else:
+                                print(f"{self.name}: EUGH!! This is NOT what I ordered!"
+                                    f"\n{self.name} is disappointed")
+                                self.review_count =+ 1
+                                self.review.add_bad_reviews(self.name)
+                                self.achievement.unlock("You've disappointed your first customer...")
+                                self.log.log(f"Achievement unlocked: Player disappoints {self.name}")
+                            self.log.log("Customer leaves a new review.")
+                            self.customers = self.customers + 1
+                            self.make.drink = None
+                            self.make.made_drink = []  # bouthaynas line
                         else:
-                            print(f"{self.name}: EUGH!! This is NOT what I ordered!"
-                                  f"\n{self.name} is disappointed")
-
-                            self.achievement.unlock("You've disappointed your first customer...")
-                            self.log.log(f"Achievement unlocked: Player disappoints {self.name}")
-                        self.customers = self.customers + 1
-                        self.make.drink = None
-                        self.make.made_drink = []  # bouthaynas line
+                            self.log.log("Didn't Finish Job")
                     else:
-                        self.log.log("Didn't Finish Job")
-                else:
-                    # quit(self.start_game())
-                    return
+                        # quit(self.start_game())
+                        return
             self.customers = 1
             sleep(self.sleep_time * 2)
             if self.day == 1:
