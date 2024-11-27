@@ -1,6 +1,6 @@
 ################################################################################
 # CMPU 2016 OOP – TU857/2 - Semester 1 Assignment.
-# Group: Concero
+# Group: Concerto
 # Members:
 # 1. Blessing Ugochukwu (student ID: C23342083).
 # 2. Renée Low (student ID: C23321923).
@@ -32,7 +32,7 @@
 # - ensure that the modules for "achievements.py" "game.py", "loggable.py", "makeDrink.py", "character.py" and "design.py
 # are there for full functionality of the game.
 
-# Enjoy the game and have fun being a barista.
+# Enjoy the game and have fun being a barista!
 ################################################################################
 from game import Game
 
