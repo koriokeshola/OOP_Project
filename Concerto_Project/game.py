@@ -1,46 +1,53 @@
-from loggable import Loggable
+from loggable import Loggable # Import relevant classes and methods
 from makeDrink import MakeDrink
 from characters import Character
 from characters import ConcreteNPC
-from achievements import Achievements  # imports achievement class
+from achievements import Achievements
 from reviews import Reviews
 from design import printing_day
 from design import type_text
-import random
-from time import sleep
+import random # For randomisation of character names 
+from time import sleep # For display purposes
 
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
 
     def __init__(self):
-        # self.running is an instance variable within the Game class
-        # This means that when an instance of the Game class is created,
-        # the game loop will start running by default as it is set to True.
+        """ Variables used to manage game logic, including:
+        The game's running state, initialised values and instructions for tracking
+        current character/day,
+        Boolean values to track game progression and current running state,
+        Helper class instances for drink making character interactions, logging,
+        achievements and reviews.
+        For example, self.running is an instance variable within the Game class
+        This means that when an instance of the Game class is created,
+        the game loop will start running by default as it is set to True. """
+        
         self.__running = True
         self.start = False
+        self.interact = False
         self.day = 1
         self.customers = 1
         self.sleep_time = 0
         self.achievements = 0
+        self.review_count = 0
         self.make = MakeDrink()
         self.character = Character()
         self.review = Reviews()
-        self.name = None
-        self.npc_name = None
-        self.interact = False
-        self.player_input = None
-        self.review_count = 0
-        self.day_drink = {
-            1: "Serving Coffee Only Today",  # coffee only
-            2: "Serving Tea Only Today",  # tea only
-            3: "Serving Coffee and Tea Today",  # coffee and tea
-            4: "Serving Boba Only Today",  # boba only
-            5: "Serving Coffee, Tea, and Boba Today"  # all three
-        }
         self.log = Loggable()
         self.error_log = Loggable()
         self.achievement = Achievements()
+        self.name = None
+        self.npc_name = None
+        self.player_input = None
+        self.day_drink = {
+            1: "Serving Coffee Only Today",
+            2: "Serving Tea Only Today",
+            3: "Serving Coffee and Tea Today",
+            4: "Serving Boba Only Today",
+            5: "Serving Coffee, Tea, and Boba Today"
+        }
         self.log.log("Game initialised.")
 
     def run(self):
@@ -48,6 +55,7 @@ class Game:
         the game."""
         self.log.log("Game is running.")
 
+        # Animated game intro
         type_text("You're stumbling around in the cold, you can't feel your face... ")
         sleep(self.sleep_time)
         type_text("A strange figure approaches. You can't see in the harsh conditions.")
@@ -67,22 +75,15 @@ class Game:
               "\n\033[1;36m|\033[0m     Serving Coffee, Tea, and Boba!      \033[1;36m|\033[0m"
               "\n\033[1;36m|                                         |\033[0m"
               "\n\033[1;36m*******************************************\033[0m")  # Cyan
-        """
-        #using ANSI Escape Sequences for coloring text in
-        print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
-              "\n\033[1;36m*******************************************\033[0m"  # Cyan
-              "\n\033[1;36m|                                         |\033[0m")
-        type_text("\t serving Coffee, Tea, and Boba!")
-        print("\n\033[1;36m|                                         |\033[0m"
-              "\n\033[1;36m*******************************************\033[0m\n")  # Cyan
-        """
-        sleep(self.sleep_time * 2)
+
+        sleep(self.sleep_time * 2) # slight delay between displaying next line
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
         while self.__running:
             self.update()
 
     def rules(self):
+        """ Method which displays rules when requested. """
         print("\n*******************************************"
               "\n|          H O W  T O  P L A Y            |"
               "\n|                                         |"
@@ -99,7 +100,7 @@ class Game:
 
     def update(self):
         """The update method waits for player input and responds to their
-        choice to start the game or quit."""
+        choice to start game, quit, display rules,."""
         try:
             self.player_input = None
             if not self.start:
@@ -108,9 +109,9 @@ class Game:
                     if self.player_input.lower() not in ["q", "r", "s"]:
                         raise ValueError("Please choose a valid letter")
                     if self.player_input.lower() == "q":
-                        # we exit the game running loop by setting this flag variable
-                        # to False
+                        # we exit the game running loop by setting this flag variable to False
                         self.__running = False
+                        # Save game logs to a file to display complete gameplay sequence
                         filename = input(
                             "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
                         self.log.save_logs_to_file(filename)
@@ -211,7 +212,7 @@ class Game:
             while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
                 if self.__running:
-                    if self.player_input is not "q":
+                    if self.player_input != "q":
                         self.update() 
 
                         if self.make.made_drink and self.interact == False:
