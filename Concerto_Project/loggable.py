@@ -1,9 +1,13 @@
+# Program Description: This program contains the logic for game logging.
+# Includes a private log getter, and methods for adding and saving logs.
+# The complete list of logs is displayed from main when game is finished.
+
 class Loggable:
     def __init__(self):
         self._logs = [] #creates private list to store log messages
 
     #getter for private logs list
-    #is read-only access to the logs outside the class
+    #provides read-only access for the logs outside the class
     @property
     def logs(self):
         return self._logs
