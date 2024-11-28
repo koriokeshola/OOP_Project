@@ -1,5 +1,8 @@
-from random import randint
+# Module Description: A module used for reviews, allows the creation of 
+# a hidden list of reviews that can then be accessed through a setter by the player
+# and can be seen logged in the final entries
 
+from random import randint # A randomiser for reviews
 
 class Reviews:  # review class defined
     def __init__(self):
@@ -9,8 +12,7 @@ class Reviews:  # review class defined
         choice = randint(1, 5)
         review = None
         if choice == 1:
-            review = (
-                f"{name}: They messed up my drink! Never coming back again. \U0001F644")  # using unicode to print emojis 
+            review = f"{name}: They messed up my drink! Never coming back again. \U0001F644"  # using unicode to print emojis 
         elif choice == 2:
             review = f"{name}: How do you manage to mess up a drink so badly??? Don't recommend it!"
         elif choice == 3:
@@ -30,8 +32,7 @@ class Reviews:  # review class defined
         elif choice == 2:
             review = f"{name}: Wonderful Customer Service, will be back in the future."
         elif choice == 3:
-            review = (
-                f"{name}: Best place for perfect coffee, good service, and a wonderful atmosphere.\U0001f600")  # using unicode to print emojis 
+            review = f"{name}: Best place for perfect coffee, good service, and a wonderful atmosphere.\U0001f600" # using unicode to print emojis 
         elif choice == 4:
             review = f"{name}: I'm so Addicted!! I'll only get my drinks from there now."
         elif choice == 5:
