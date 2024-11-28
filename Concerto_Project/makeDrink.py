@@ -1,11 +1,11 @@
 # Program Description: This program contains the functionality for
-# taking user input to complete customer orders.
+# Taking user input to complete customer orders.
 
+# Importing necessary libraries and Modules
 from loggable import Loggable
 from characters import Character
 import random
 from time import sleep
-
 
 class MakeDrink:
     """ A class that manages the process of making drinks based on customer orders.
@@ -68,7 +68,7 @@ class MakeDrink:
         else:
             # appends chosen drink type to the made_drink list
             self.made_drink.append(self.drink)
-
+            
             if self.drink == "c":
                 self.drink_name = "coffee"
             elif self.drink == "t":
