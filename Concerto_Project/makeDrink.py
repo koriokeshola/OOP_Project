@@ -111,6 +111,8 @@ class MakeDrink:
             self.ice = input(f"Did {name} want ice? yes, no, or extra?: [y, n, x]: ")  # yes, no, or extra
 
         if self.drink == "b":
+            self.boba = input(f"Did {name} want extra boba? yes or no?: [y, n]: ")  # yes or no
+            sleep(.5)
             while self.boba not in ["y", "n"]:
                 print("Please pick y or n\n")
                 self.boba = input(f"Did {name} want extra boba? yes or no?: [y, n]: ")  # yes or no
