@@ -1,4 +1,4 @@
-from loggable import Loggable # Import relevant classes and methods
+from loggable import Loggable  # Import relevant classes and methods
 from makeDrink import MakeDrink
 from characters import Character
 from characters import ConcreteNPC
@@ -6,13 +6,11 @@ from achievements import Achievements
 from reviews import Reviews
 from design import printing_day
 from design import type_text
-import random # For randomisation of character names 
-from time import sleep # For display purposes
-
+import random  # For randomisation of character names
+from time import sleep  # For display purposes
 
 class Game:
     """The Game class is set up to manage the game's behavior."""
-
     def __init__(self):
         """ Variables used to manage game logic, including:
         The game's running state, initialised values and instructions for tracking
@@ -23,7 +21,7 @@ class Game:
         For example, self.running is an instance variable within the Game class
         This means that when an instance of the Game class is created,
         the game loop will start running by default as it is set to True. """
-        
+
         self.__running = True
         self.start = False
         self.interact = False
@@ -76,7 +74,7 @@ class Game:
               "\n\033[1;36m|                                         |\033[0m"
               "\n\033[1;36m*******************************************\033[0m")  # Cyan
 
-        sleep(self.sleep_time * 2) # slight delay between displaying next line
+        sleep(self.sleep_time * 2)  # slight delay between displaying next line
         print("Now that you have started your job, you will have to satisfy customers everyday!")
 
         while self.__running:
@@ -148,13 +146,13 @@ class Game:
                 elif self.player_input.lower() == "c":  # continues game
                     self.log.log("Player continued working")
                     self.continue_game()
-                elif self.player_input.lower() == "r": # Print reviews, if any
+                elif self.player_input.lower() == "r":  # Print reviews, if any
                     if self.review_count <= 0:
                         print("You have not gotten any reviews yet.")
                     else:
                         print("\033[1;32;40mReviews:\033[0m")
-                        for item in self.review.reviews: 
-                            print(item, " ") 
+                        for item in self.review.reviews:
+                            print(item, " ")
                 elif self.player_input.lower() == "i":  # interacts with customer
                     if not self.interact:
                         self.log.log("Player talks to the customer")
@@ -170,12 +168,13 @@ class Game:
                     else:
                         print("You need to interact with the customer first.\n")
                         self.update()
-                elif self.player_input.lower() == "n": # Interact with an NPC
+                elif self.player_input.lower() == "n":  # Interact with an NPC
                     self.interact_with_customers()
 
     def interact_with_customers(self):
-    """Interact with an NPC by creating a randomised instance of the
-    abstract ConcreteNPC class."""
+        """Interact with an NPC by creating a randomised instance of the
+        abstract ConcreteNPC class."""
+
         self.npc_name = random.choice(self.character.name)
         print("")
         npc = ConcreteNPC(self.npc_name)
@@ -183,11 +182,13 @@ class Game:
         print("")
         self.update()
 
+
     def drink_op(self):
         """This method provides the list of currently available drink options."""
         print(f"\nCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
         self.update()
+
 
     def make_drink(self):
         """This method allows user to set the chosen drink, proceed to make it,
@@ -197,6 +198,7 @@ class Game:
         self.make.make_drink(self.name)
         self.log.log("Player makes the drink")
         self.interact = False
+
 
     def start_game(self):
         """The start_game method introduces the player to the café game and sets the scene.
@@ -209,47 +211,47 @@ class Game:
         print(f"Hello {barista}, time to get working...\n")
         total_stars = 0
 
-        while self.day <= 5 and self.__running: # while the game is not completed
+        while self.day <= 5 and self.__running:  # while the game is not completed
             if self.__running:
-                printing_day(self.day) # determine current day and available drink options
+                printing_day(self.day)  # determine current day and available drink options
                 ch_drk = self.day_drink[self.day]
                 print(f"\n{ch_drk}\n")
-                stars = 0 # initialise stars to zero at the start of each day
+                stars = 0  # initialise stars to zero at the start of each day
             else:
                 return
 
-            while self.customers <= 3 and self.__running: 
+            while self.customers <= 3 and self.__running:
                 self.name = random.choice(self.character.name)
                 if self.__running:
-                    if self.player_input != "q": # proceed if user has not decided to quit
-                        self.update() 
+                    if self.player_input != "q":  # proceed if user has not decided to quit
+                        self.update()
 
-                        if self.make.made_drink and self.interact == False: 
+                        if self.make.made_drink and self.interact == False:
                             print(f"\n{self.name} collects their drink and takes a sip...")
                             sleep(self.sleep_time)
-                            if self.make.made_drink == self.make.character.option: 
+                            if self.make.made_drink == self.make.character.option:
                                 print(f"{self.name}: Thank you! This is delicious!")
                                 self.log.log(f"Player impressed {self.name} with perfect drink")
                                 stars += 1
-                                self.review_count =+ 1
+                                self.review_count = + 1
                                 self.review.add_good_reviews(self.name)
-                            else: # if order is made incorrectly
+                            else:  # if order is made incorrectly
                                 print(f"{self.name}: EUGH!! This is NOT what I ordered!"
-                                    f"\n{self.name} is disappointed")
-                                self.review_count =+ 1
+                                      f"\n{self.name} is disappointed")
+                                self.review_count = + 1
                                 self.review.add_bad_reviews(self.name)
                                 self.achievement.unlock("You've disappointed your first customer...")
                                 self.log.log(f"Achievement unlocked: Player disappoints {self.name}")
                             self.log.log("Customer leaves a new review.")
                             self.customers += 1
-                            self.make.drink = None # reset make drink
+                            self.make.drink = None  # reset make drink
                             self.make.made_drink = []
                         else:
                             self.log.log("Didn't Finish Job")
-                    else: # return if user decides to quit
+                    else:  # return if user decides to quit
                         return
-            self.customers = 1 # reset customer count for following day
-            sleep(self.sleep_time * 2) # slight delay before printing achievement
+            self.customers = 1  # reset customer count for following day
+            sleep(self.sleep_time * 2)  # slight delay before printing achievement
             if self.day == 1:
                 self.achievement.unlock("You survived your first day on the job!")
                 self.log.log("Achievement unlocked: Player finished Day 1")
@@ -265,10 +267,10 @@ class Game:
             else:
                 self.achievement.unlock("You completed day 5!")
                 self.log.log("Achievement unlocked: Player finished Day 5")
-            self.day += 1 # proceed to next day
+            self.day += 1  # proceed to next day
 
             total_stars += stars  # sum of stars
-            if stars == 1: # print "star" or "stars" based on amount earned
+            if stars == 1:  # print "star" or "stars" based on amount earned
                 print(f"You earned {stars} star today!")
             else:
                 print(f"You earned {stars} stars today!")
@@ -283,6 +285,7 @@ class Game:
                     self.achievement.unlock("Wow, you did not earn a single star...")
                     self.log.log("Achievement unlocked: How do you manage..?")
             sleep(self.sleep_time * 2)
+
 
     def continue_game(self):
         """This method allows the user to simply continue on."""
