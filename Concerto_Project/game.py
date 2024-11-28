@@ -26,8 +26,9 @@ class Game:
         self.start = False
         self.interact = False
         self.day = 1
+        self.long = 0
         self.customers = 1
-        self.sleep_time = 0
+        self.sleep_time = 1
         self.achievements = 0
         self.review_count = 0
         self.make = MakeDrink()
@@ -54,18 +55,18 @@ class Game:
         self.log.log("Game is running.")
 
         # Animated game intro
-        type_text("You're stumbling around in the cold, you can't feel your face... ")
-        sleep(self.sleep_time)
-        type_text("A strange figure approaches. You can't see in the harsh conditions.")
-        sleep(self.sleep_time)
-        type_text("He extends out his hand.. you reach out to take it.")
-        sleep(self.sleep_time)
-        type_text("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
-        sleep(self.sleep_time)
-        type_text("You accept... reluctantly.")
-        sleep(self.sleep_time)
-        type_text("Now your journey begins...")
-        sleep(self.sleep_time)
+        # type_text("You're stumbling around in the cold, you can't feel your face... ")
+        # sleep(self.sleep_time)
+        # type_text("A strange figure approaches. You can't see in the harsh conditions.")
+        # sleep(self.sleep_time)
+        # type_text("He extends out his hand.. you reach out to take it.")
+        # sleep(self.sleep_time)
+        # type_text("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
+        # sleep(self.sleep_time)
+        # type_text("You accept... reluctantly.")
+        # sleep(self.sleep_time)
+        # type_text("Now your journey begins...")
+        # sleep(self.sleep_time)
 
         print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
               "\n\033[1;36m*******************************************\033[0m"  # Cyan
@@ -100,6 +101,8 @@ class Game:
         """The update method waits for player input and responds to their
         choice to start game, quit, display rules, interact with a customer,
         make drink, continue, interact with an NPC or read reviews."""
+        if self.long > 2 and self.interact == True:
+            print(f"\033[1;31m{self.name}: Hey where is my drink at?\033[0m")
         try:
             self.player_input = None
             if not self.start:
@@ -171,6 +174,7 @@ class Game:
                 elif self.player_input.lower() == "n":  # Interact with an NPC
                     self.interact_with_customers()
 
+
     def interact_with_customers(self):
         """Interact with an NPC by creating a randomised instance of the
         abstract ConcreteNPC class."""
@@ -180,6 +184,8 @@ class Game:
         npc = ConcreteNPC(self.npc_name)
         npc.perform_action()
         print("")
+        if self.interact == True:
+            self.long += 1
         self.update()
 
 
@@ -249,7 +255,7 @@ class Game:
                         else:
                             self.log.log("Didn't Finish Job")
                     else:  # return if user decides to quit
-                        self.__running = False
+                        return
             self.customers = 1  # reset customer count for following day
             sleep(self.sleep_time * 2)  # slight delay before printing achievement
             if self.day == 1:
@@ -267,7 +273,6 @@ class Game:
             else:
                 self.achievement.unlock("You completed day 5!")
                 self.log.log("Achievement unlocked: Player finished Day 5")
-            self.day += 1  # proceed to next day
 
             total_stars += stars  # sum of stars
             if stars == 1:  # print "star" or "stars" based on amount earned
@@ -283,8 +288,10 @@ class Game:
                     self.log.log("Achievement unlocked: Best Barista To Ever Exist!")
                 if total_stars == 0:
                     self.achievement.unlock("Wow, you did not earn a single star...")
-                    self.log.log("Achievement unlocked: How do you manage..?")
+                    self.log.log("Achievement unlocked: How do you manage to not get a single star...? LOSER! get back on the streets!")
             sleep(self.sleep_time * 2)
+            self.day += 1  # proceed to next day
+        self.day = 1
 
 
     def continue_game(self):
@@ -295,4 +302,6 @@ class Game:
         self.achievement.unlock("You're a hard worker!")
         self.achievements += 1
         self.log.log("Player continued working")
+        if self.interact == True:
+            self.long += 1
         self.update()
