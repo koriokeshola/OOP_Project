@@ -1,3 +1,9 @@
+# Program description: Main program branch operator, allows for all the modules within the folder
+# to work here, allows for player to start, continue, and exit the game. Gives the player
+# interaction choices with the customer through various classes and methods.
+# Logs each action done by the player through a module, allows player to make and perform actions
+# Main body of the Game.
+
 # Import relevant classes and methods
 from loggable import Loggable  
 from makeDrink import MakeDrink
