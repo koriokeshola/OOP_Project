@@ -1,9 +1,7 @@
 import time
 import sys
 
-
-
-#Function that prints what day of game it is
+# Function that prints what day of game it is.
 def printing_day(number):
         if number== 1:
             print(""" 
@@ -51,12 +49,10 @@ $$$$    $$$$     $$$$$$$$$$$$$         $$$$                  444
 $$$$  $$$$$      $$$$     $$$$         $$$$                  444       
 $$$$$$$          $$$$     $$$$         $$$$         444444444444  """)
 
-
-
-#function that animates text with typing effect
+# Function that animates text with a slow typing effect.
 def type_text(text, delay=0.075):
     for char in text:
-        sys.stdout.write(char) #Write one character at a time without creating newline like print
-        sys.stdout.flush() #forces character to display immediately rather than wait for buffer to fil
-        time.sleep(delay) #pauses for delays to create typing effect
-    print()  #Move to the next line
+        sys.stdout.write(char) # Write one character at a time without creating a newline like print.
+        sys.stdout.flush() # Forces character to display immediately rather than wait for buffer to fill.
+        time.sleep(delay) # Pauses for delays to create a typing effect.
+    print()  # Move to the next line.
