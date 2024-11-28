@@ -1,3 +1,7 @@
+# Program Description: Program used for displaying day designs,
+# and allowing for life like typing when the player is introduced to the game.
+# Gives the player a more immersive experience.
+
 import time
 import sys
 
