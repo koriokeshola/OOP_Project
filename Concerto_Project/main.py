@@ -18,7 +18,7 @@
 # where players can earn stars based on if they've made a customer's order correctly.
 #
 # File Structure:
-# - main_game.py: The main game script.
+# - main.py: The main game script.
 # - achievements.py: Module for handling achievements.
 # - makeDrink.py: Module for making drinks.
 # - game.py: Module containing game content.
