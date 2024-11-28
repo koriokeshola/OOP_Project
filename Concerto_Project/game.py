@@ -55,18 +55,18 @@ class Game:
         self.log.log("Game is running.")
 
         # Animated game intro
-        # type_text("You're stumbling around in the cold, you can't feel your face... ")
-        # sleep(self.sleep_time)
-        # type_text("A strange figure approaches. You can't see in the harsh conditions.")
-        # sleep(self.sleep_time)
-        # type_text("He extends out his hand.. you reach out to take it.")
-        # sleep(self.sleep_time)
-        # type_text("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
-        # sleep(self.sleep_time)
-        # type_text("You accept... reluctantly.")
-        # sleep(self.sleep_time)
-        # type_text("Now your journey begins...")
-        # sleep(self.sleep_time)
+        type_text("You're stumbling around in the cold, you can't feel your face... ")
+        sleep(self.sleep_time)
+        type_text("A strange figure approaches. You can't see in the harsh conditions.")
+        sleep(self.sleep_time)
+        type_text("He extends out his hand.. you reach out to take it.")
+        sleep(self.sleep_time)
+        type_text("He offers you a chance to redeem yourself, a nice job in a cosy cafe!")
+        sleep(self.sleep_time)
+        type_text("You accept... reluctantly.")
+        sleep(self.sleep_time)
+        type_text("Now your journey begins...")
+        sleep(self.sleep_time)
 
         print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
               "\n\033[1;36m*******************************************\033[0m"  # Cyan
