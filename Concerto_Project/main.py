@@ -13,7 +13,7 @@
 # Game Expansion Explanation:
 # In our project, we created a game with a café theme where players are a barista in the café
 # and interacts with customers and takes their orders, then makes the customer's order by choosing
-# the available options. We've implemented an achhievemnts that players can unlock,
+# the available options. We've implemented an achievements that players can unlock,
 # levels that unlocks new menus, a system to log the player interactions and a star system
 # where players can earn stars based on if they've made a customer's order correctly.
 #
