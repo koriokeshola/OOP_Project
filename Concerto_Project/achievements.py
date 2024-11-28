@@ -1,3 +1,6 @@
+# Program Description: A program used to create achievements which are
+# unlockable based on players actions and counted throughout the game
+
 from loggable import Loggable #importing Loggable class to handle log inputs
 
 class Achievements:
