@@ -1,3 +1,7 @@
+# Program Description: Program which controls NPC and Customer interactions,
+# allows the customers to be randomised as well as their drinks.
+# Includes abstract methods within the NPC class.
+
 # Importing necessary libraries.
 from abc import ABC, abstractmethod 
 from random import randint
