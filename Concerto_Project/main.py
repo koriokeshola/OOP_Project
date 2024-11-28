@@ -6,7 +6,7 @@
 # 2. Renée Low (student ID: C23321923).
 # 3. Kori Okeshola (student ID: C23401212).
 # 4. Bouthayna Metarfi (student ID: C23306091).
-# 5. Bartosz (student ID: C23398751).
+# 5. Bartosz Sobiegraj (student ID: C23398751).
 # 6. Seema Alazhari (student ID: C23405732).
 # Date: November 26, 2024.
 #
