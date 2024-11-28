@@ -1,4 +1,4 @@
-# Module Description: A module used for reviews, allows the creation of 
+# Program Description: Program used for reviews, allows the creation of 
 # a hidden list of reviews that can then be accessed through a setter by the player
 # and can be seen logged in the final entries
 
