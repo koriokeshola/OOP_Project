@@ -28,7 +28,7 @@
 # - reviews.py: Module containing a hidden reviews list from customers.
 #
 # Running the Game:
-# - To play "The Golden Café" with our expansions, run the "main_game.py" file.
+# - To play "The Golden Café" with our expansions, run the "main.py" file.
 # - ensure that the modules for "achievements.py" "game.py", "loggable.py", "makeDrink.py", "character.py" and "design.py
 # are there for full functionality of the game.
 
