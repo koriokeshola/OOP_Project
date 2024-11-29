@@ -3,12 +3,13 @@
 # interaction choices with the customer through various classes and methods.
 # Logs each action done by the player through a module, allows player to make and perform actions
 # Main body of the Game.
-from Concerto_Project.characters import NormalNPC
+
 # Import relevant classes and methods
 from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
 from characters import ConcreteNPC
+from characters import NormalNPC
 from achievements import Achievements
 from reviews import Reviews
 from design import printing_day
