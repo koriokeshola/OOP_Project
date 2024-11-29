@@ -3,7 +3,7 @@
 # interaction choices with the customer through various classes and methods.
 # Logs each action done by the player through a module, allows player to make and perform actions
 # Main body of the Game.
-
+from Concerto_Project.characters import NormalNPC
 # Import relevant classes and methods
 from loggable import Loggable
 from makeDrink import MakeDrink
@@ -45,7 +45,6 @@ class Game:
         self.error_log = Loggable() # Variable for a Module
         self.achievement = Achievements() # Variable for a Module
         self.name = None # Name that'll be used from character Module
-        self.npc_name = None
         self.player_input = None # Player input for when they choose actions
         self.day_drink = { # Instructions
             1: "Serving Coffee Only Today",
@@ -191,10 +190,13 @@ class Game:
         """Interact with an NPC by creating a randomised instance of the
         abstract ConcreteNPC class."""
 
-        self.npc_name = random.choice(self.character.name)
+        npc_name = random.choice(self.character.name)
+        new_npc_name = random.choice(self.character.name)
         print("")
-        npc = ConcreteNPC(self.npc_name)
+        npc = ConcreteNPC(npc_name)
+        normal_npc = NormalNPC(new_npc_name)
         npc.perform_action()
+        normal_npc.perform_action()
         print("")
         if self.interact:
             self.long += 1
