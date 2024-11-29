@@ -126,3 +126,8 @@ class ConcreteNPC(NPC):  # Inheritance from NPC.
         self.new_dialogue = random.choice(self.dialogue)  # Chooses randomly from the choice list.
         print(f"{self._name} greets you politely.")  # Uses the same name for each customer so that it can't be confused.
         print(f"{self._name}: \"{self.new_dialogue}\"")
+
+class NormalNPC(NPC):  # Inheritance from NPC.
+    def perform_action(self):
+        drink = random.choice(["tea", "coffee", "boba"])  # Chooses randomly from the choice list.
+        print(f"\n{self._name} is sitting down drinking {drink} in the corner.")  # Uses the same name for each customer so that it can't be confused.
