@@ -5,7 +5,7 @@
 # Main body of the Game.
 
 # Import relevant classes and methods
-from loggable import Loggable  
+from loggable import Loggable
 from makeDrink import MakeDrink
 from characters import Character
 from characters import ConcreteNPC
@@ -33,10 +33,10 @@ class Game:
         self.start = False # Whether the game has started
         self.interact = False # Whether player has interacted with a customer
         self.day = 1 # What current day it is in-game
-        self.long = 0 
+        self.long = 0
         self.customers = 1 # What customer it is
         self.sleep_time = 1 # How long the delay is
-        self.achievements = 0 # How many achievements the user has recieved
+        self.achievements = 0 # How many achievements the user has received
         self.review_count = 0 # # How many reviews the player has gotten thus far
         self.make = MakeDrink() # Variable for a Module
         self.character = Character() # Variable for a Module
@@ -45,9 +45,9 @@ class Game:
         self.error_log = Loggable() # Variable for a Module
         self.achievement = Achievements() # Variable for a Module
         self.name = None # Name that'll be used from character Module
-        self.npc_name = None 
+        self.npc_name = None
         self.player_input = None # Player input for when they choose actions
-        self.day_drink = { # Instructions 
+        self.day_drink = { # Instructions
             1: "Serving Coffee Only Today",
             2: "Serving Tea Only Today",
             3: "Serving Coffee and Tea Today",
@@ -107,7 +107,7 @@ class Game:
         """The update method waits for player input and responds to their
         choice to start game, quit, display rules, interact with a customer,
         make drink, continue, interact with an NPC or read reviews."""
-        if self.long > 2 and self.interact == True: # times the players actions 
+        if self.long > 2 and self.interact == True: # times the players actions
             print(f"\033[1;31m{self.name}: Hey where is my drink at?\033[0m")
         try:
             self.player_input = None
@@ -130,7 +130,7 @@ class Game:
                         self.start_game()
                         self.log.log("Player starts the game")
                     elif self.player_input.lower() == "r":
-                        # Let's the player read the rules 
+                        # Lets the player read the rules
                         self.rules()
                         self.log.log("Player checks the rules")
         # Exception handling in case of incorrect character input or sudden error
@@ -195,7 +195,7 @@ class Game:
         npc = ConcreteNPC(self.npc_name)
         npc.perform_action()
         print("")
-        if self.interact == True:
+        if self.interact:
             self.long += 1
         self.update()
 
@@ -244,7 +244,7 @@ class Game:
                     if self.player_input != "q":  # proceed if user has not decided to quit
                         self.update()
 
-                        if self.make.made_drink and self.interact == False: # Dramatic efftect code to see if the player got the order correct
+                        if self.make.made_drink and self.interact == False: # Dramatic effect code to see if the player got the order correct
                             print(f"\n{self.name} collects their drink and takes a sip...")
                             sleep(self.sleep_time)
                             if self.make.made_drink == self.make.character.option: # Player successfully makes the drink correctly
@@ -314,6 +314,6 @@ class Game:
         self.achievement.unlock("You're a hard worker!")
         self.achievements += 1
         self.log.log("Player continued working")
-        if self.interact == True:
+        if self.interact:
             self.long += 1
         self.update()
