@@ -78,12 +78,12 @@ class Character(ABC):  # Make Character an abstract class.
 
         if choice == 1:
             # Obnoxious customer.
-            print(f"{name}: Hi! Can I get a large boba with extra pearls! I love it when it's as cold as possible!\n Can you also add milk and a lot of sugar?! Thank you!!")
+            print(f"{name}: Hi! Can I get a large boba with extra pearls! I love it when it's as cold as possible!\nCan you also add milk and a lot of sugar?! Thank you!!")
             self.option = ["b", "l", "y", "3", "c", "x",
                            "y"]  # Input that the player has to put in for them to gain a star.
         elif choice == 2:
             # Regular customer.
-            print(f"{name}: I want a small cold boba, no milk, please don't make it sweet, and can you add a little extra pearls? . \nOh and no ice please.")
+            print(f"{name}: I want a small cold boba, no milk, please don't make it sweet, and can you add a little extra pearls? \nOh and no ice please.")
             self.option = ["b", "s", "n", "0", "c", "n",
                            "y"]  # Input that the player has to put in for them to gain a star.
         elif choice == 3:
@@ -98,7 +98,7 @@ class Character(ABC):  # Make Character an abstract class.
                            "n"]  # Input that the player has to put in for them to gain a star.
         elif choice == 5:
             # Rude customer.
-            print(f"{name}: I don't have all day so make me a small sized hot boba, very sweet with no milk or ice and extra pearls. \n Move it along now.")
+            print(f"{name}: I don't have all day so make me a small sized hot boba, very sweet with no milk or ice and extra pearls. \nMove it along now.")
             self.option = ["b", "s", "n", "3", "h", "n",
                            "y"]  # Input that the player has to put in for them to gain a star.
 
