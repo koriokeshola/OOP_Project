@@ -143,7 +143,7 @@ class Game:
             self.log.log(f"Unexpected Error: {e}")
             filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
             self.log.save_logs_to_file(filename)
-            self._running = False  # stop game upon critical error
+            self.__running = False  # stop game upon critical error
         else:  # if user chooses to continue they get more options
             while self.player_input not in ["q", "i", "m", "c", "n", "r"]:
                 self.player_input = input(
@@ -307,7 +307,7 @@ class Game:
             sleep(self.sleep_time * 2)
             self.day += 1  # proceed to next day
         self.day = 1
-
+        self.__running = False
 
     def continue_game(self):
         """This method allows the user to simply continue on."""
