@@ -33,7 +33,7 @@ class Game:
         self.start = False # Whether the game has started
         self.interact = False # Whether player has interacted with a customer
         self.day = 1 # What current day it is in-game
-        self.long = 0
+        self.long = 0 # Amount of time the customer interacted with waits
         self.customers = 1 # What customer it is
         self.sleep_time = 1 # How long the delay is
         self.achievements = 0 # How many achievements the user has received
@@ -159,13 +159,14 @@ class Game:
                     self.continue_game()
                 elif self.player_input.lower() == "r":  # Print reviews, if any
                     if self.review_count <= 0:
-                        print("You have not gotten any reviews yet.")
+                        print("You have not gotten any reviews yet.\n")
                         self.log.log("Player checks the Reviews.")
                     else:
                         self.log.log("Player checks the Reviews.")
                         print("\033[1;32;40mReviews:\033[0m")
                         for item in self.review.reviews:
                             print(item, " ")
+                        print("")
                 elif self.player_input.lower() == "i":  # interacts with customer
                     if not self.interact:
                         self.log.log("Player talks to a customer")
@@ -202,8 +203,9 @@ class Game:
 
     def drink_op(self):
         """This method provides the list of currently available drink options."""
-        print(f"\nCustomer {self.customers}")
+        print(f"\n\033[1;34mCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
+        print("\033[0m")
         self.update()
 
 
@@ -215,6 +217,7 @@ class Game:
         self.make.make_drink(self.name)
         self.log.log("Player makes the drink")
         self.interact = False
+        self.long = 0 # sets amount of time the customer waited to 0
 
 
     def start_game(self):
