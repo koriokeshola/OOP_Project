@@ -74,12 +74,14 @@ class Game:
         type_text("Now your journey begins...")
         sleep(self.sleep_time)
 
-        print("\033[1;33m            G O L D E N   C A F É\033[0m"  # Bold, Yellow Text
-              "\n\033[1;36m*******************************************\033[0m"  # Cyan
-              "\n\033[1;36m|                                         |\033[0m"
-              "\n\033[1;36m|\033[0m     Serving Coffee, Tea, and Boba!      \033[1;36m|\033[0m"
-              "\n\033[1;36m|                                         |\033[0m"
-              "\n\033[1;36m*******************************************\033[0m")  # Cyan
+        print("");
+        #using ANSI Escape Sequences for coloring output
+        color("            G O L D E N   C A F É", 1)
+        color("*******************************************", 2)  #blue
+        color("|                                         |", 2)
+        color("|      Serving Coffee, Tea, and Boba!     |", 4)  #default color
+        color("|                                         |", 2)
+        color("*******************************************", 2)  #blue
 
         sleep(self.sleep_time * 2)  # slight delay between displaying next line
         print("Now that you have started your job, you will have to satisfy customers everyday!")
