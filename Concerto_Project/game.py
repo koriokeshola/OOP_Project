@@ -319,7 +319,6 @@ class Game:
         # testing achievements
         self.achievement.unlock("You're a hard worker!")
         self.achievements += 1
-        self.log.log("Player continued working")
         if self.interact:
             self.long += 1
         self.update()
