@@ -117,18 +117,17 @@ class Game:
                     if self.player_input.lower() not in ["q", "r", "s"]:
                         raise ValueError("Please choose a valid letter")
                     if self.player_input.lower() == "q":
-                        # we exit the game running loop by setting this flag variable to False
-                        self.__running = False
+                        self.log.log("Player quits the game")
                         # Save game logs to a file to display complete gameplay sequence
                         filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
-                        self.log.log("Player quits the game")
                         self.log.save_logs_to_file(filename)
+                        # we exit the game running loop by setting this flag variable to False
                         self.__running = False
                     elif self.player_input.lower() == "s":
                         # Allows the game to start
                         self.start = True
-                        self.start_game()
                         self.log.log("Player starts the game")
+                        self.start_game()
                     elif self.player_input.lower() == "r":
                         # Lets the player read the rules
                         self.rules()
@@ -149,11 +148,12 @@ class Game:
                 self.player_input = input(
                     "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, \n'r' to see reviews or 'n' for NPC interaction: ")
                 if self.player_input.lower() == "q":  # quits game
-                    self.__running = False
-                    filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
-                    self.log.log("Player quits the game.")
-                    self.log.save_logs_to_file(filename)
-                    self.__running = False
+                    self.log.log("Player quits the game")
+                        # Save game logs to a file to display complete gameplay sequence
+                        filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                        self.log.save_logs_to_file(filename)
+                        # we exit the game running loop by setting this flag variable to False
+                        self.__running = False
                 elif self.player_input.lower() == "c":  # continues game
                     self.log.log("Player continued working.")
                     self.continue_game()
