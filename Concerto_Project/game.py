@@ -117,21 +117,24 @@ class Game:
                     if self.player_input.lower() not in ["q", "r", "s"]:
                         raise ValueError("Please choose a valid letter")
                     if self.player_input.lower() == "q":
-                        self.log.log("Player quits the game")
+                        self.log.log("Player quits the game.")
                         # Save game logs to a file to display complete gameplay sequence
                         filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                        if not filename.endswith(".txt"):
+                            filename += ".txt" # Append ".txt" if not added
                         self.log.save_logs_to_file(filename)
+                        self.log.log(f"Logs saved to file named {filename}")
                         # we exit the game running loop by setting this flag variable to False
                         self.__running = False
                     elif self.player_input.lower() == "s":
                         # Allows the game to start
                         self.start = True
-                        self.log.log("Player starts the game")
+                        self.log.log("Player starts the game.")
                         self.start_game()
                     elif self.player_input.lower() == "r":
                         # Lets the player read the rules
                         self.rules()
-                        self.log.log("Player checks the rules")
+                        self.log.log("Player checks the rules.")
         # Exception handling in case of incorrect character input or sudden error
         except ValueError as ve:
             print(f"Error: {ve}. Please try again")
@@ -141,17 +144,23 @@ class Game:
             print(f"Error: {e}. An unexpected error occurred.")
             self.log.log(f"Unexpected Error: {e}")
             filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+            if not filename.endswith(".txt"): # Append ".txt" if not added
+                filename += ".txt"
             self.log.save_logs_to_file(filename)
+            self.log.log(f"Logs saved to file named {filename}")
             self.__running = False  # stop game upon critical error
         else:  # if user chooses to continue they get more options
             while self.player_input not in ["q", "i", "m", "c", "n", "r"]:
                 self.player_input = input(
                     "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, \n'r' to see reviews or 'n' for NPC interaction: ")
                 if self.player_input.lower() == "q":  # quits game
-                    self.log.log("Player quits the game")
+                    self.log.log("Player quits the game.")
                     # Save game logs to a file to display complete gameplay sequence
                     filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                    if not filename.endswith(".txt"):
+                        filename += ".txt" # Append ".txt" if not added
                     self.log.save_logs_to_file(filename)
+                    self.log.log(f"Logs saved to file named {filename}")
                     # we exit the game running loop by setting this flag variable to False
                     self.__running = False
                 elif self.player_input.lower() == "c":  # continues game
@@ -169,7 +178,7 @@ class Game:
                         print("")
                 elif self.player_input.lower() == "i":  # interacts with customer
                     if not self.interact:
-                        self.log.log("Player talks to a customer")
+                        self.log.log("Player talks to a customer.")
                         self.interact = True
                         self.drink_op()
                     else:
@@ -177,7 +186,7 @@ class Game:
                         self.update()
                 elif self.player_input.lower() == "m":  # Make a drink, only after interaction
                     if self.interact:
-                        self.log.log("Player chooses to make a drink")
+                        self.log.log("Player chooses to make a drink.")
                         self.make_drink()
                     else:
                         print("You need to interact with the customer first.\n")
@@ -218,7 +227,7 @@ class Game:
         self.make.drink_choice()
 
         self.make.make_drink(self.name)
-        self.log.log("Player makes the drink")
+        self.log.log("Player makes the drink.")
         self.interact = False
         self.long = 0 # sets amount of time the customer waited to 0
 
@@ -255,7 +264,7 @@ class Game:
                             sleep(self.sleep_time)
                             if self.make.made_drink == self.make.character.option: # Player successfully makes the drink correctly
                                 print(f"{self.name}: Thank you! This is delicious!")
-                                self.log.log(f"Player impressed {self.name} with perfect drink")
+                                self.log.log(f"Player impressed {self.name} with perfect drink.")
                                 stars += 1 # Adds a star to the total star counter
                                 self.review_count = + 1
                                 self.review.add_good_reviews(self.name)
@@ -265,32 +274,32 @@ class Game:
                                 self.review_count = + 1
                                 self.review.add_bad_reviews(self.name) # adds a bad review to the review list
                                 self.achievement.unlock("You've disappointed your first customer...")
-                                self.log.log(f"Achievement unlocked: Player disappoints {self.name}")
+                                self.log.log(f"Achievement unlocked: Player disappoints {self.name}.")
                             self.log.log("Customer leaves a new review.")
                             self.customers += 1
                             self.make.drink = None  # reset make drink
                             self.make.made_drink = []
                         else:
-                            self.log.log("Didn't Finish Job")
+                            self.log.log("Didn't Finish Job.")
                     else:  # return if user decides to quit
                         return
             self.customers = 1  # reset customer count for following day
             sleep(self.sleep_time * 2)  # slight delay before printing achievement
             if self.day == 1:
                 self.achievement.unlock("You survived your first day on the job!")
-                self.log.log("Achievement unlocked: Player finished Day 1")
+                self.log.log("Achievement unlocked: Player finished Day 1.")
             elif self.day == 2:
                 self.achievement.unlock("You completed day 2!")
-                self.log.log("Achievement unlocked: Player finished Day 2")
+                self.log.log("Achievement unlocked: Player finished Day 2.")
             elif self.day == 3:
                 self.achievement.unlock("You completed day 3!")
-                self.log.log("Achievement unlocked: Player finished Day 3")
+                self.log.log("Achievement unlocked: Player finished Day 3.")
             elif self.day == 4:
                 self.achievement.unlock("You completed day 4!")
-                self.log.log("Achievement unlocked: Player finished Day 4")
+                self.log.log("Achievement unlocked: Player finished Day 4.")
             else:
                 self.achievement.unlock("You completed day 5!")
-                self.log.log("Achievement unlocked: Player finished Day 5")
+                self.log.log("Achievement unlocked: Player finished Day 5.")
 
             total_stars += stars  # sum of stars
             if stars == 1:  # print "star" or "stars" based on amount earned
