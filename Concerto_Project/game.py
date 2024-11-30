@@ -107,9 +107,9 @@ class Game:
               "\n*******************************************\n")
 
     def update(self):
-        """The update method handles player input and processes their choices, such as starting the game,
-        quitting, viewing the rules, interacting with customers,
-        making drinks, continuing gameplay, engaging with NPCs, or reading reviews."""
+        """The update method waits for player input and responds to their
+        choice to start game, quit, display rules, interact with a customer,
+        make drink, continue, interact with an NPC or read reviews."""
         if self.long > 2 and self.interact == True: # times the players actions
             print(f"\033[1;31m{self.name}: Hey where is my drink at?\033[0m")
         try:
@@ -203,7 +203,6 @@ class Game:
                     self.interact_with_customers()
                     self.log.log("Player chats with a nearby NPC.")
 
-
     def interact_with_customers(self):
         """Interact with an NPC by creating a randomised instance of the
         abstract ConcreteNPC class."""
@@ -220,14 +219,12 @@ class Game:
             self.long += 1
         self.update()
 
-
     def drink_op(self):
         """This method provides the list of currently available drink options."""
         print(f"\n\033[1;34mCustomer {self.customers}")
         self.make.drink_options(self.name, self.day)
         print("\033[0m")
         self.update()
-
 
     def make_drink(self):
         """This method allows user to set the chosen drink, proceed to make it,
@@ -239,14 +236,15 @@ class Game:
         self.interact = False
         self.long = 0 # sets amount of time the customer waited to 0
 
-
     def start_game(self):
         """The start_game method introduces the player to the café game and sets the scene.
         Additionally, it contains logic for displaying what day it is, ensuring only 3
         customers are served per day, determining customer satisfaction by confirming
         whether the user-selected ingredients for each order are correct and tracking reviews."""
         # print("\nGame intro")
-        barista = input("What is your name: ")
+        barista = ""
+        while len(barista) < 1:
+            barista = input("What is your name: ")
         print(f"Hello {barista}, time to get working...\n")
         self.log.log("Player Gets Hired!")
         total_stars = 0
