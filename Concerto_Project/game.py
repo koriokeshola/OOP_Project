@@ -93,7 +93,7 @@ class Game:
     def rules(self):
         """ Method which displays rules when requested. """
         print("\n*******************************************"
-              "\n|          H O W  T O  P L A Y            |"
+              "\n|          H O W  T O  P L A Y  (>//<)    |"
               "\n|                                         |"
               "\n|  1. There are 3 Customers Per Day       |"
               "\n|  2. Each Day has New Menu Options       |"
@@ -107,9 +107,9 @@ class Game:
               "\n*******************************************\n")
 
     def update(self):
-        """The update method waits for player input and responds to their
-        choice to start game, quit, display rules, interact with a customer,
-        make drink, continue, interact with an NPC or read reviews."""
+        """The update method handles player input and processes their choices, such as starting the game,
+        quitting, viewing the rules, interacting with customers,
+        making drinks, continuing gameplay, engaging with NPCs, or reading reviews."""
         if self.long > 2 and self.interact == True: # times the players actions
             print(f"\033[1;31m{self.name}: Hey where is my drink at?\033[0m")
         try:
