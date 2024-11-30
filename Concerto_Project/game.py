@@ -290,6 +290,7 @@ class Game:
                             self.log.log("Didn't Finish Job.")
                     else:  # return if user decides to quit
                         return
+            # checks if the game is still running
             if self.__running:
                 self.customers = 1  # reset customer count for following day
                 sleep(self.sleep_time * 2)  # slight delay before printing achievement
