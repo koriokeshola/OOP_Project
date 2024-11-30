@@ -14,6 +14,7 @@ from achievements import Achievements
 from reviews import Reviews
 from design import printing_day
 from design import type_text
+from design import color
 import random  # For randomisation of character names
 from time import sleep  # For display purposes
 
