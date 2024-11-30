@@ -149,11 +149,11 @@ class Game:
                     "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, \n'r' to see reviews or 'n' for NPC interaction: ")
                 if self.player_input.lower() == "q":  # quits game
                     self.log.log("Player quits the game")
-                        # Save game logs to a file to display complete gameplay sequence
-                        filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
-                        self.log.save_logs_to_file(filename)
-                        # we exit the game running loop by setting this flag variable to False
-                        self.__running = False
+                    # Save game logs to a file to display complete gameplay sequence
+                    filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                    self.log.save_logs_to_file(filename)
+                    # we exit the game running loop by setting this flag variable to False
+                    self.__running = False
                 elif self.player_input.lower() == "c":  # continues game
                     self.log.log("Player continued working.")
                     self.continue_game()
