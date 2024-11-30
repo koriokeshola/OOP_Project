@@ -18,10 +18,10 @@ class Loggable:
     def save_logs_to_file(self, filename):
         # Saves current logs to a specified file
         try: # Use try-except block to handle potential errors
-            with open(filename, 'w') as file:
+            with open(filename, 'w') as file: # open and then close when finished
                 for log in self._logs:
                     file.write(log + '\n') # Writes each log entry, then adds a newline
             print(f"Logs saved to {filename}") # Prints out message to confirm the save
-        except Exception as e:
+        except Exception as e: # exception for unexpected error
             print(f"Error: {e}. An unexpected error occurred while saving logs.")
             self.log.log(f"Unexpected Error: {e}")
