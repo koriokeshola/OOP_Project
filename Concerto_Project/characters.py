@@ -19,7 +19,7 @@ class Character(ABC):  # Make Character an abstract class.
         # Creating names and options list for verifying customer orders.
         self.option = []
         self.name = ["Madoka", "Hugo", "Morgan", "Billy", "Renee", "Boots", "Mike Wazowski", "Big Guy", "Homura",
-                     "Stinky Man", "Homeless Person", "Mike Tyson", "Toji", "Saitama", "Humbleness Personified"]
+                     "Stinky Man", "Awesome Person", "Mike Tyson", "Toji", "Saitama", "Humbleness Personified"]
 
     # @abstractmethod
     def perform_action(self, name):
