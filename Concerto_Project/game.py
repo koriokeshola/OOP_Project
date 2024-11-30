@@ -75,7 +75,7 @@ class Game:
         type_text("Now your journey begins...")
         sleep(self.sleep_time)
 
-        print("");
+        print("")
         #using ANSI Escape Sequences for coloring output
         color("            G O L D E N   C A F É", 1)
         color("*******************************************", 2)  #blue
@@ -120,12 +120,14 @@ class Game:
                     if self.player_input.lower() not in ["q", "r", "s"]:
                         raise ValueError("Please choose a valid letter")
                     if self.player_input.lower() == "q":
-                        self.log.log("Player quits the game.")
-                        # Save game logs to a file to display complete gameplay sequence
-                        filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                        filename = ""
+                        while len(filename) < 1:
+                            # Save game logs to a file to display complete gameplay sequence
+                            filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
                         if not filename.endswith(".txt"):
                             filename += ".txt" # Append ".txt" if not added
                         self.log.save_logs_to_file(filename)
+                        self.log.log("Player quits the game.")
                         self.log.log(f"Logs saved to file named {filename}")
                         # we exit the game running loop by setting this flag variable to False
                         self.__running = False
@@ -157,12 +159,15 @@ class Game:
                 self.player_input = input(
                     "Press 'q' to quit, 'i' to interact, 'm' to make drink, 'c' to continue, \n'r' to see reviews or 'n' for NPC interaction: ")
                 if self.player_input.lower() == "q":  # quits game
-                    self.log.log("Player quits the game.")
-                    # Save game logs to a file to display complete gameplay sequence
-                    filename = input("Please enter a file name of the template <filename.txt> in order to save the game logs: ")
+                    filename = ""
+                    while len(filename) < 1:
+                        # Save game logs to a file to display complete gameplay sequence
+                        filename = input(
+                            "Please enter a file name of the template <filename.txt> in order to save the game logs: ")
                     if not filename.endswith(".txt"):
-                        filename += ".txt" # Append ".txt" if not added
+                        filename += ".txt"  # Append ".txt" if not added
                     self.log.save_logs_to_file(filename)
+                    self.log.log("Player quits the game.")
                     self.log.log(f"Logs saved to file named {filename}")
                     # we exit the game running loop by setting this flag variable to False
                     self.__running = False
@@ -240,7 +245,6 @@ class Game:
         Additionally, it contains logic for displaying what day it is, ensuring only 3
         customers are served per day, determining customer satisfaction by confirming
         whether the user-selected ingredients for each order are correct and tracking reviews."""
-        self.log.log("Game has begun.")
         # print("\nGame intro")
         barista = input("What is your name: ")
         print(f"Hello {barista}, time to get working...\n")
@@ -286,41 +290,42 @@ class Game:
                             self.log.log("Didn't Finish Job.")
                     else:  # return if user decides to quit
                         return
-            self.customers = 1  # reset customer count for following day
-            sleep(self.sleep_time * 2)  # slight delay before printing achievement
-            if self.day == 1:
-                self.achievement.unlock("You survived your first day on the job!")
-                self.log.log("Achievement unlocked: Player finished Day 1.")
-            elif self.day == 2:
-                self.achievement.unlock("You completed day 2!")
-                self.log.log("Achievement unlocked: Player finished Day 2.")
-            elif self.day == 3:
-                self.achievement.unlock("You completed day 3!")
-                self.log.log("Achievement unlocked: Player finished Day 3.")
-            elif self.day == 4:
-                self.achievement.unlock("You completed day 4!")
-                self.log.log("Achievement unlocked: Player finished Day 4.")
-            else:
-                self.achievement.unlock("You completed day 5!")
-                self.log.log("Achievement unlocked: Player finished Day 5.")
+            if self.__running:
+                self.customers = 1  # reset customer count for following day
+                sleep(self.sleep_time * 2)  # slight delay before printing achievement
+                if self.day == 1:
+                    self.achievement.unlock("You survived your first day on the job!")
+                    self.log.log("Achievement unlocked: Player finished Day 1.")
+                elif self.day == 2:
+                    self.achievement.unlock("You completed day 2!")
+                    self.log.log("Achievement unlocked: Player finished Day 2.")
+                elif self.day == 3:
+                    self.achievement.unlock("You completed day 3!")
+                    self.log.log("Achievement unlocked: Player finished Day 3.")
+                elif self.day == 4:
+                    self.achievement.unlock("You completed day 4!")
+                    self.log.log("Achievement unlocked: Player finished Day 4.")
+                else:
+                    self.achievement.unlock("You completed day 5!")
+                    self.log.log("Achievement unlocked: Player finished Day 5.")
 
-            total_stars += stars  # sum of stars
-            if stars == 1:  # print "star" or "stars" based on amount earned
-                print(f"You earned {stars} star today!")
-            else:
-                print(f"You earned {stars} stars today!")
-            sleep(self.sleep_time * 2)
-            if self.day == 5:
-                print(f"You earned a total of {total_stars} this week!")
+                total_stars += stars  # sum of stars
+                if stars == 1:  # print "star" or "stars" based on amount earned
+                    print(f"You earned {stars} star today!")
+                else:
+                    print(f"You earned {stars} stars today!")
                 sleep(self.sleep_time * 2)
-                if total_stars == 15:
-                    self.achievement.unlock("Maximum stars achieved!")
-                    self.log.log("Achievement unlocked: Best Barista To Ever Exist!") # Game ending Achievement
-                if total_stars == 0:
-                    self.achievement.unlock("Wow, you did not earn a single star...")
-                    self.log.log("Achievement unlocked: How do you manage to not get a single star...? LOSER! Get back on the streets!") # Game ending Achievement
-            sleep(self.sleep_time * 2)
-            self.day += 1  # proceed to next day
+                if self.day == 5:
+                    print(f"You earned a total of {total_stars} this week!")
+                    sleep(self.sleep_time * 2)
+                    if total_stars == 15:
+                        self.achievement.unlock("Maximum stars achieved!")
+                        self.log.log("Achievement unlocked: Best Barista To Ever Exist!") # Game ending Achievement
+                    if total_stars == 0:
+                        self.achievement.unlock("Wow, you did not earn a single star...")
+                        self.log.log("Achievement unlocked: How do you manage to not get a single star...? LOSER! Get back on the streets!") # Game ending Achievement
+                sleep(self.sleep_time * 2)
+                self.day += 1  # proceed to next day
         self.day = 1
         self.__running = False
 
