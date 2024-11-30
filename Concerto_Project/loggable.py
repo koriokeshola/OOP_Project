@@ -4,21 +4,24 @@
 
 class Loggable:
     def __init__(self):
-        self._logs = [] #creates private list to store log messages
+        self._logs = [] # creates private list to store log messages
 
-    #getter for private logs list
-    #provides read-only access for the logs outside the class
+    # Getter for private logs list
+    # Provides read-only access for the logs outside the class
     @property
     def logs(self):
         return self._logs
 
     def log(self, message: str):
-        self._logs.append(message) #adds a new message to the logs list
+        self._logs.append(message) # Adds a new message to the logs list
 
     def save_logs_to_file(self, filename):
-        #saves current logs to a specified file
-        f = open(filename, 'w') #opens file in write mode
-        for log in self._logs:
-            f.write(log + '\n') #writes each log entry, then adds a newline
-        f.close() #closes file after writing
-        print(f"Logs saved to {filename}") #prints out message to confirm the save
+        # Saves current logs to a specified file
+        try: # Use try-except block to handle potential errors
+            with open(filename, 'w') as file:
+                for log in self._logs:
+                    file.write(log + '\n') # Writes each log entry, then adds a newline
+            print(f"Logs saved to {filename}") # Prints out message to confirm the save
+        except Exception as e:
+            print(f"Error: {e}. An unexpected error occurred while saving logs.")
+            self.log.log(f"Unexpected Error: {e}")
